@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".LaundryActivity"
+    tools:showIn="@layout/activity_laundry">
+
+    <ImageView
+        android:id="@+id/imageViewLaundry"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="30dp"
+        android:adjustViewBounds="false"
+        app:srcCompat="@android:color/holo_red_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="50sp"
+        android:text="@string/text1"
+        android:layout_toEndOf="@id/imageViewLaundry" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/imageViewLaundry"
+        android:layout_marginStart="50dp"
+        android:theme="@android:style/Animation"
+        android:visibility="visible"
+        tools:background="@android:drawable/alert_light_frame">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="10"
+            android:textAlignment="center"
+            android:textSize="25sp" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/frameLayout"
+        android:layout_below="@id/imageViewLaundry"
+        android:textSize="35sp"
+        android:text="dias"/>
+
+    <TextView
+        android:id="@+id/rain_probability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frameLayout"
+        android:layout_toEndOf="@id/imageViewLaundry"
+        android:textSize="35sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="% Chuva"/>
+
+    <ImageView
+        android:id="@+id/hanging_laundry"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/rain_probability"
+        android:layout_toEndOf="@id/imageViewLaundry"
+        android:adjustViewBounds="false"
+        app:srcCompat="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/hanging_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rain_probability"
+        android:layout_toEndOf="@id/hanging_laundry"
+        android:layout_marginStart="15dp"
+        android:textSize="45sp"
+        android:text="✓"/>
+
+</RelativeLayout>

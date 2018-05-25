@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">Home Management</string>
     <string name="action_settings">Settings</string>
+    <string name="text1">Roupa</string>
+    <string name="text2">Compras</string>
+    <string name="text3">Loiça</string>
+    <string name="text4">Chão</string>
+    <string name="add_button">Adicionar</string>
+    <string name="add_name">Nome da Tarefa:</string>
+    <string name="add_name_edit">Nome</string>
+    <string-array name="categories">
+        <item>Roupa</item>
+        <item>Compras</item>
+        <item>Loiça</item>
+        <item>Chão</item>
+    </string-array>
+    <string name="title_activity_floor">FloorActivity</string>
+    <string name="title_activity_laundry">LaundryActivity</string>
+    <string name="title_activity_shopping">ShoppingActivity</string>
+
 </resources>

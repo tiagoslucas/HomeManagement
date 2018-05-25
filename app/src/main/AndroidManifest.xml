@@ -19,6 +19,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddActivity" />
+        <activity
+            android:name=".FloorActivity"
+            android:label="@string/title_activity_floor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LaundryActivity"
+            android:label="@string/title_activity_laundry"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShoppingActivity"
+            android:label="@string/title_activity_shopping"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
