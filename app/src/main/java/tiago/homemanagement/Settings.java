@@ -35,13 +35,13 @@ public class Settings {
     }
 
     public void setType(String type) {
-        if (type == "laundry")
+        if (type.toLowerCase() == "laundry")
             this.type = Types.laundry;
-        else if (type == "floor")
+        else if (type.toLowerCase() == "floor")
             this.type = Types.floor;
-        else if (type == "dishes")
+        else if (type.toLowerCase() == "dishes")
             this.type = Types.dishes;
-        else if (type == "shopping")
+        else if (type.toLowerCase() == "shopping")
             this.type = Types.shopping;
     }
 

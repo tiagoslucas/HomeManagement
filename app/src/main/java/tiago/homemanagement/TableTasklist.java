@@ -18,13 +18,15 @@ public class TableTasklist implements BaseColumns {
         this.db = db;
     }
 
-    public void create(){
-        db.execSQL("CREATE TABLE "+TABLE_NAME+
-                "("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                NAME_FIELD+" TEXT NOT NULL,"+
-                DONE_FIELD+" INTEGER," +
-                DATE_FIELD+"TEXT," +
-                SETTING_FIELD+"INTEGER)");
+    public void create() {
+        db.execSQL("CREATE TABLE " + TABLE_NAME +
+                "(" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                NAME_FIELD + " TEXT NOT NULL," +
+                DONE_FIELD + " INTEGER," +
+                DATE_FIELD + "TEXT," +
+                "FOREIGN KEY (" + SETTING_FIELD + ") REFERENCES " +
+                TableSettings.TABLE_NAME + "(" + TableSettings._ID + ")" +
+                ")");
     }
 
     public long insert(ContentValues values) {

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class TableSettings implements BaseColumns {
-    private static final String TABLE_NAME = "homemanagement";
+    public static final String TABLE_NAME = "homemanagement";
     public static final String TYPE_FIELD = "type";
     public static final String TIME_FIELD = "time";
     private SQLiteDatabase db;
@@ -37,6 +37,12 @@ public class TableSettings implements BaseColumns {
 
     public Cursor query(String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy){
         return db.query(TABLE_NAME, columns, selection, selectionArgs, groupBy, having, orderBy);
+    }
+
+    public static ContentValues getContentValues(Settings settings){
+        ContentValues values = new ContentValues();
+        values.put(TYPE_FIELD, settings.getType());
+        return values;
     }
 
     public static Settings getCurrentSettings(Cursor cursor){
