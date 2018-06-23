@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class TableSettings implements BaseColumns {
-    public static final String TABLE_NAME = "homemanagement";
+    public static final String TABLE_NAME = "Settings";
     public static final String TYPE_FIELD = "type";
     public static final String TIME_FIELD = "time";
     private SQLiteDatabase db;
@@ -24,7 +24,7 @@ public class TableSettings implements BaseColumns {
     }
 
     public long insert(ContentValues values) {
-        return db.insert(TABLE_NAME, null, values);
+        return (db.insert(TABLE_NAME, null, values));
     }
 
     public int update(ContentValues values, String whereClause, String[] whereArgs) {
@@ -42,6 +42,7 @@ public class TableSettings implements BaseColumns {
     public static ContentValues getContentValues(Settings settings){
         ContentValues values = new ContentValues();
         values.put(TYPE_FIELD, settings.getType());
+        values.put(TIME_FIELD,settings.getTime());
         return values;
     }
 

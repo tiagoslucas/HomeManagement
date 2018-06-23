@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.nio.channels.SeekableByteChannel;
+import java.util.function.LongToIntFunction;
 
 import static android.support.test.InstrumentationRegistry.getContext;
 import static org.junit.Assert.*;
@@ -24,6 +25,10 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class SettingsDbTest {
+
+    public static final String FIRST_TYPE = "laundry";
+    public static final String SECOND_TYPE = "dishes";
+
     @Before
     public void setUp() {
         getContext().deleteDatabase(DatabaseOpenHelper.DATABASE_NAME);
@@ -50,16 +55,17 @@ public class SettingsDbTest {
         TableSettings tableSettings = new TableSettings(db);
 
         Settings setting = new Settings();
-        setting.setType("laundry");
+        setting.setType(FIRST_TYPE);
+        setting.setTime((int) (System.currentTimeMillis()/1000l));
 
         // Insert/create (C)RUD
         long id = newSetting(tableSettings, setting);
 
         //query/read C(R)UD
-        setting = ReadFirstSetting(tableSettings,"laundry",id);
+        setting = ReadFirstSetting(tableSettings,FIRST_TYPE,id);
 
         //update CR(U)D
-        setting.setType("dishes");
+        setting.setType(SECOND_TYPE);
         int rowsAffected = tableSettings.update(
                 TableSettings.getContentValues(setting),
                 TableSettings._ID + "=?",
@@ -69,7 +75,7 @@ public class SettingsDbTest {
         assertEquals("Failed to update setting",1,rowsAffected);
 
         //query/read C(R)UD
-        setting = ReadFirstSetting(tableSettings,"dishes",id);
+        setting = ReadFirstSetting(tableSettings,SECOND_TYPE,id);
 
         //delete CRU(D)
         rowsAffected = tableSettings.delete(
@@ -87,17 +93,15 @@ public class SettingsDbTest {
                         TableSettings.getContentValues(setting)
         );
 
-        assertNotEquals("Failed to create Setting",-1,id);
+        assertNotEquals("Failed to create setting",-1,id);
 
         return id;
     }
 
-    
-
     @NonNull
     private Settings ReadFirstSetting(TableSettings tableSettings, String expectedType, long expectedID) {
         Cursor cursor = tableSettings.query(TableSettings.ALL_COLUMNS, null, null, null, null, null);
-        assertEquals("Failed to read settings", -1, cursor.getCount());
+        assertEquals("Failed to read settings", 1, cursor.getCount());
 
         assertTrue("Failed to read first setting", cursor.moveToNext());
 

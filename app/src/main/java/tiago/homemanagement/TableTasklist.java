@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class TableTasklist implements BaseColumns {
-    private static final String TABLE_NAME = "homemanagement";
+    private static final String TABLE_NAME = "Tasklist";
     public static final String NAME_FIELD = "name";
     public static final String DONE_FIELD = "done";
     public static final String DATE_FIELD = "date";
@@ -23,10 +23,13 @@ public class TableTasklist implements BaseColumns {
                 "(" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 NAME_FIELD + " TEXT NOT NULL," +
                 DONE_FIELD + " INTEGER," +
-                DATE_FIELD + "TEXT," +
+                DATE_FIELD + " TEXT," +
+                SETTING_FIELD + " INTEGER," +
                 "FOREIGN KEY (" + SETTING_FIELD + ") REFERENCES " +
-                TableSettings.TABLE_NAME + "(" + TableSettings._ID + ")" +
-                ")");
+                    TableSettings.TABLE_NAME +
+                        "(" + TableSettings._ID + ")" +
+                ")"
+        );
     }
 
     public long insert(ContentValues values) {
@@ -59,5 +62,11 @@ public class TableTasklist implements BaseColumns {
         item.setDate(cursor.getString(datePosition));
         item.setSettid(cursor.getInt(settidPosition));
         return item;
+    }
+
+    public static ContentValues getContentValues(TaskItem taskItem) {
+        ContentValues values = new ContentValues();
+        values.put(NAME_FIELD, taskItem.getName());
+        return values;
     }
 }

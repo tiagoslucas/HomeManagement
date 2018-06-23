@@ -12,7 +12,6 @@ public class Settings {
     private Types type;
     private int time;
 
-
     public int getId() {
         return id;
     }
