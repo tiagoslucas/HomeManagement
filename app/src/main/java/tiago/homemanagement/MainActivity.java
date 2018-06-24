@@ -1,5 +1,6 @@
 package tiago.homemanagement;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -50,30 +51,28 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addmodule(View view) {
-
-    }
-
     public void laundry(View view) {
-        Intent intent = new Intent(this,LaundryActivity.class);
-        this.startActivity(intent);
+        startActivity(LaundryActivity.class);
     }
 
     public void shopping(View view) {
-        Intent intent = new Intent(this,ShoppingActivity.class);
-        this.startActivity(intent);
+        startActivity(ShoppingActivity.class);
     }
 
     public void floor(View view) {
-        Intent intent = new Intent(this,FloorActivity.class);
-        this.startActivity(intent);
+        startActivity(FloorActivity.class);
     }
 
     public void dishes(View view) {
+        startActivity(DishesActivity.class);
     }
 
     public void add(){
-        Intent intent = new Intent(this,AddActivity.class);
+        startActivity(AddActivity.class);
+    }
+
+    public void startActivity(Class activity){
+        Intent intent = new Intent(this,activity);
         this.startActivity(intent);
     }
 }

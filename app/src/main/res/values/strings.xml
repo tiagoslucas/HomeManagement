@@ -17,5 +17,7 @@
     <string name="title_activity_floor">FloorActivity</string>
     <string name="title_activity_laundry">LaundryActivity</string>
     <string name="title_activity_shopping">ShoppingActivity</string>
+    <string name="title_activity_dishes">DishesActivity</string>
+    <string name="days_passed">dias</string>
 
 </resources>

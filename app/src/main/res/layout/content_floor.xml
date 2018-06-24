@@ -34,24 +34,24 @@
         android:layout_below="@+id/imageViewFloor"
         android:layout_marginStart="50dp"
         android:theme="@android:style/Animation"
-        android:visibility="visible"
-        tools:background="@android:drawable/alert_light_frame">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="10"
             android:textAlignment="center"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:background="@android:drawable/alert_light_frame"/>
     </FrameLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/frameLayout"
+        android:layout_toEndOf="@+id/frameLayout"
         android:layout_below="@id/imageViewFloor"
         android:textSize="35sp"
-        android:text="dias"/>
+        android:text="@string/days_passed"/>
 
     <TextView
         android:id="@+id/room1"
@@ -66,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frameLayout"
-        android:layout_toEndOf="@id/title"
+        android:layout_toEndOf="@+id/title"
         android:layout_marginStart="15dp"
         android:textSize="40sp"
         android:text="✓"/>
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/room1"
-        android:layout_toEndOf="@id/title"
+        android:layout_toEndOf="@+id/title"
         android:layout_marginStart="15dp"
         android:textSize="40sp"
         android:text="✓"/>
@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/room2"
-        android:layout_toEndOf="@id/title"
+        android:layout_toEndOf="@+id/title"
         android:layout_marginStart="15dp"
         android:textSize="40sp"
         android:text="✓"/>
