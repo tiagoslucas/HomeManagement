@@ -30,17 +30,17 @@ public class Settings {
         else if (type == Types.shopping)
             return "shopping";
         else
-            return "";
+            return null;
     }
 
     public void setType(String type) {
-        if (type.toLowerCase() == "laundry")
+        if (type.toLowerCase().equals("laundry"))
             this.type = Types.laundry;
-        else if (type.toLowerCase() == "floor")
+        else if (type.toLowerCase().equals("floor"))
             this.type = Types.floor;
-        else if (type.toLowerCase() == "dishes")
+        else if (type.toLowerCase().equals("dishes"))
             this.type = Types.dishes;
-        else if (type.toLowerCase() == "shopping")
+        else if (type.toLowerCase().equals("shopping"))
             this.type = Types.shopping;
     }
 
