@@ -7,7 +7,6 @@ public class TaskItem {
     private String date;
     private int settid;
 
-
     public int getId() {
         return id;
     }

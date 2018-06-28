@@ -35,7 +35,7 @@ public class FloorActivity extends AppCompatActivity {
 
     private void add() {
         Intent intent = new Intent(this, AddActivity.class);
-        intent.putExtra("parent",4);
+        intent.putExtra("parent","Floor");
         startActivity(intent);
     }
 

@@ -37,6 +37,7 @@
         android:theme="@android:style/Animation" >
 
         <TextView
+            android:id="@+id/dishes_days"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text=""
@@ -74,6 +75,6 @@
         android:layout_marginTop="20dp"
         android:textSize="45sp"
         android:text="@string/checkmark"
-        android:visibility="invisible"/>
+        android:visibility="visible"/>
 
 </RelativeLayout>

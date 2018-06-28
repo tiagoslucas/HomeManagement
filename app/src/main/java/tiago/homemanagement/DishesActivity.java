@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class DishesActivity extends AppCompatActivity {
 
@@ -28,15 +29,25 @@ public class DishesActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {add();
+            public void onClick(View view) {check();
             }
         });
     }
 
-    private void add() {
-        Intent intent = new Intent(this, AddActivity.class);
-        intent.putExtra("parent",3);
-        startActivity(intent);
+    private void check() {
+        TextView check = (TextView) findViewById(R.id.drying_check);
+        if(check.getVisibility() == View.VISIBLE){
+            check.setVisibility(View.INVISIBLE);
+            // SET date AS "System.currentTimeMillis()" WHERE name LIKE "dishes"
+
+            /*
+            TextView dishes_days = (TextView) findViewById(R.id.dishes_days);
+            int days = System.currentTimeMillis() - date;
+            dishes_days.setText(days);
+            */
+        } else {
+            check.setVisibility(View.VISIBLE);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

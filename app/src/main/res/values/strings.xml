@@ -9,9 +9,7 @@
     <string name="add_name">Nome da Tarefa:</string>
     <string name="add_name_edit">Nome</string>
     <string-array name="categories">
-        <item>Roupa</item>
         <item>Compras</item>
-        <item>Loiça</item>
         <item>Chão</item>
     </string-array>
     <string name="title_activity_floor">FloorActivity</string>

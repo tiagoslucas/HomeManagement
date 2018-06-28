@@ -35,7 +35,7 @@ public class ShoppingActivity extends AppCompatActivity {
 
     private void add() {
         Intent intent = new Intent(this, AddActivity.class);
-        intent.putExtra("parent",2);
+        intent.putExtra("parent","Shopping");
         startActivity(intent);
     }
 

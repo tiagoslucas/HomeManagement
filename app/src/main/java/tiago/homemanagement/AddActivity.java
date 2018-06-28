@@ -9,26 +9,27 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 public class AddActivity extends AppCompatActivity {
-
-    Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle(R.string.add_task);
         }
-
-        spinner.setSelection(1 + getIntent().getIntExtra("parent",0));
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        if(getIntent().getStringExtra("parent").equals("Floor")) {
+            spinner.setSelection(1);
+        } else{
+            spinner.setSelection(0);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -36,7 +37,17 @@ public class AddActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home){
-            NavUtils.navigateUpFromSameTask(this);
+            Spinner spinner = (Spinner) findViewById(R.id.spinner);
+            switch(spinner.getSelectedItemPosition()){
+                case 0:
+                    NavUtils.navigateUpTo(this,new Intent(this,ShoppingActivity.class));
+                    break;
+                case 1:
+                    NavUtils.navigateUpTo(this,new Intent(this,FloorActivity.class));
+                    break;
+                default:
+                    NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
