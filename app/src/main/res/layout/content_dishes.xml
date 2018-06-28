@@ -16,7 +16,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginBottom="30dp"
         android:adjustViewBounds="false"
-        app:srcCompat="@android:color/holo_red_dark" />
+        android:src="@drawable/dishes"
+        android:contentDescription="@string/text3" />
 
     <TextView
         android:id="@+id/title"
@@ -38,7 +39,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="10"
+            android:text=""
             android:textAlignment="center"
             android:textSize="25sp"
             android:background="@android:drawable/alert_light_frame" />
@@ -53,24 +54,26 @@
         android:text="@string/days_passed"/>
 
     <ImageView
-        android:id="@+id/hanging_laundry"
+        android:id="@+id/drying_dishes"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_below="@+id/frameLayout"
         android:layout_toEndOf="@id/imageViewDishes"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="false"
-        app:srcCompat="@android:color/holo_red_dark" />
+        android:src="@drawable/dishes_drying"
+        android:contentDescription="@string/drying_dishes" />
 
     <TextView
         android:id="@+id/drying_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/frameLayout"
-        android:layout_toEndOf="@id/hanging_laundry"
+        android:layout_toEndOf="@id/drying_dishes"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:textSize="45sp"
-        android:text="✓"/>
+        android:text="@string/checkmark"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

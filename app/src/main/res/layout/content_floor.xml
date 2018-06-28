@@ -16,7 +16,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginBottom="30dp"
         android:adjustViewBounds="false"
-        app:srcCompat="@android:color/holo_red_dark" />
+        android:src="@drawable/floor"
+        android:contentDescription="@string/text4" />
 
     <TextView
         android:id="@+id/title"
@@ -39,7 +40,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="10"
+            android:text=""
             android:textAlignment="center"
             android:textSize="25sp"
             android:background="@android:drawable/alert_light_frame"/>
@@ -57,7 +58,7 @@
         android:id="@+id/room1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sala"
+        android:text=""
         android:layout_margin="5dp"
         android:textSize="30sp"
         android:layout_below="@+id/frameLayout"
@@ -69,13 +70,14 @@
         android:layout_toEndOf="@+id/title"
         android:layout_marginStart="15dp"
         android:textSize="40sp"
-        android:text="✓"/>
+        android:text="@string/checkmark"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/room2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cozinha"
+        android:text=""
         android:layout_margin="5dp"
         android:textSize="30sp"
         android:layout_below="@+id/room1"
@@ -87,24 +89,7 @@
         android:layout_toEndOf="@+id/title"
         android:layout_marginStart="15dp"
         android:textSize="40sp"
-        android:text="✓"/>
-
-    <TextView
-        android:id="@+id/room3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quarto"
-        android:layout_margin="5dp"
-        android:textSize="30sp"
-        android:layout_below="@+id/room2"
-        android:layout_toEndOf="@id/imageViewFloor"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/room2"
-        android:layout_toEndOf="@+id/title"
-        android:layout_marginStart="15dp"
-        android:textSize="40sp"
-        android:text="✓"/>
+        android:text="@string/checkmark"
+        android:visibility="invisible"/>
 
 </RelativeLayout>
