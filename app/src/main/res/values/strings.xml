@@ -96,5 +96,6 @@
     <string name="percent_rain">% Chuva</string>
     <string name="clothes_drying">Roupa Pendurada</string>
     <string name="drying_dishes">Loiça Arrumada</string>
+    <string name="add_task">Nova Tarefa</string>
 
 </resources>

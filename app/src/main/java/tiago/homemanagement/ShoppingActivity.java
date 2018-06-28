@@ -28,11 +28,15 @@ public class ShoppingActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View view) {add();
             }
         });
+    }
+
+    private void add() {
+        Intent intent = new Intent(this, AddActivity.class);
+        intent.putExtra("parent",2);
+        startActivity(intent);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

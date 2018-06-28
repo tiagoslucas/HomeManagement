@@ -22,7 +22,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
-        android:text="@string/add_button" />
+        android:text="@string/add_button"
+        android:onClick="newTask"/>
 
     <TextView
         android:id="@+id/textView1"
