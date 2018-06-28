@@ -22,7 +22,6 @@ public class AddActivity extends AppCompatActivity {
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle(R.string.add_task);
         }
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         if(getIntent().getStringExtra("parent").equals("Floor")) {

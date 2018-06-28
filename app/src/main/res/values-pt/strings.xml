@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Home Management</string>
+    <string name="app_name">Gestão Caseira</string>
     <string name="action_settings">Definições</string>
     <string name="text1">Roupa</string>
     <string name="text2">Compras</string>
@@ -20,7 +20,6 @@
     <string name="percent_rain">% Chuva</string>
     <string name="clothes_drying">Roupa Pendurada</string>
     <string name="drying_dishes">Loiça Arrumada</string>
-    <string name="add_task">Nova Tarefa</string>
     <string name="pref_title_social_recommendations">Ativar recomendações sociais</string>
     <string name="pref_description_social_recommendations">Recomendações baseadas no seu histórico de mensagens</string>
     <string name="pref_title_display_name">Mostrar nome</string>
@@ -34,4 +33,5 @@
     <string name="pref_title_ringtone">Toque</string>
     <string name="pref_ringtone_silent">Silêncio</string>
     <string name="pref_title_vibrate">Vibração</string>
+    <string name="title_activity_add">Nova Tarefa</string>
 </resources>

@@ -94,6 +94,6 @@
     <string name="percent_rain">% Rain</string>
     <string name="clothes_drying">Hanging Clothes</string>
     <string name="drying_dishes">Dishes Set</string>
-    <string name="add_task">New Task</string>
+    <string name="title_activity_add">New Task</string>
 
 </resources>

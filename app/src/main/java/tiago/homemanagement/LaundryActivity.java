@@ -24,7 +24,6 @@ public class LaundryActivity extends AppCompatActivity {
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle(R.string.text1);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
