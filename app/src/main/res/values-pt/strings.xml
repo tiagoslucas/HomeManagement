@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Home Management</string>
+    <string name="action_settings">Definições</string>
+    <string name="text1">Roupa</string>
+    <string name="text2">Compras</string>
+    <string name="text3">Loiça</string>
+    <string name="text4">Chão</string>
+    <string name="add_button">Adicionar</string>
+    <string name="add_name">Nome da Tarefa:</string>
+    <string name="add_name_edit">Nome</string>
+    <string name="title_activity_floor">Chão</string>
+    <string name="title_activity_laundry">Roupa</string>
+    <string name="title_activity_shopping">Compras</string>
+    <string name="title_activity_dishes">Loiça</string>
+    <string name="days_passed">dias</string>
+    <string name="title_activity_settings">Definições</string>
+    <string name="pref_header_general">Geral</string>
+    <string name="checkmark">✓</string>
+    <string name="percent_rain">% Chuva</string>
+    <string name="clothes_drying">Roupa Pendurada</string>
+    <string name="drying_dishes">Loiça Arrumada</string>
+    <string name="add_task">Nova Tarefa</string>
+    <string name="pref_title_social_recommendations">Ativar recomendações sociais</string>
+    <string name="pref_description_social_recommendations">Recomendações baseadas no seu histórico de mensagens</string>
+    <string name="pref_title_display_name">Mostrar nome</string>
+    <string name="pref_default_display_name">João Silva</string>
+    <string name="pref_title_add_friends_to_messages">Adicionar amigos</string>
+    <string name="pref_header_data_sync">Sincronização</string>
+    <string name="pref_title_sync_frequency">Frequência de sincronização</string>
+    <string name="pref_title_system_sync_settings">Definições de sincronização</string>
+    <string name="pref_header_notifications">Notificações</string>
+    <string name="pref_title_new_message_notifications">Notificações de nova mensagem</string>
+    <string name="pref_title_ringtone">Toque</string>
+    <string name="pref_ringtone_silent">Silêncio</string>
+    <string name="pref_title_vibrate">Vibração</string>
+</resources>
