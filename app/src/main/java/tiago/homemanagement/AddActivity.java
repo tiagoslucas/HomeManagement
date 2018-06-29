@@ -10,9 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class AddActivity extends AppCompatActivity {
+
+    public static final int SHOPPING_SETTID = 2;
+    private static final int FLOOR_SETTID = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,5 +57,32 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void newTask(View view) {
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        EditText name = (EditText) findViewById(R.id.editText);
+        TaskItem task = new TaskItem();
+        if(spinner.getSelectedItemPosition() == 0){
+            // Shopping
+            DatabaseOpenHelper openHelper = new DatabaseOpenHelper(getApplicationContext());
+            TableTasklist tableTasklist = new TableTasklist(openHelper.getReadableDatabase());
+            task.setName(name.getText().toString());
+            task.setSettid(SHOPPING_SETTID);
+            tableTasklist.update(
+                    TableTasklist.getContentValues(task),
+                    TableTasklist.SETTING_FIELD + "=?",
+                    new String[] {String.valueOf(SHOPPING_SETTID)}
+            );
+        } else if (spinner.getSelectedItemPosition() == 1){
+            // Floor
+            DatabaseOpenHelper openHelper = new DatabaseOpenHelper(getApplicationContext());
+            TableTasklist tableTasklist = new TableTasklist(openHelper.getReadableDatabase());
+            task.setName(name.getText().toString());
+            task.setDate(System.currentTimeMillis());
+            task.setSettid(FLOOR_SETTID);
+            tableTasklist.update(
+                    TableTasklist.getContentValues(task),
+                    TableTasklist.SETTING_FIELD + "=?",
+                    new String[] {String.valueOf(FLOOR_SETTID)}
+            );
+        }
     }
 }

@@ -1,5 +1,12 @@
 package tiago.homemanagement;
 
+import android.text.format.DateFormat;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class TaskItem {
     private int id;
     private String name;
@@ -35,7 +42,24 @@ public class TaskItem {
         return date;
     }
 
+    public long getTime(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        long time = System.currentTimeMillis();
+        try {
+            Date dateType = dateFormat.parse(this.date);
+            time = dateType.getTime() / 1000l;
+        } catch (ParseException e) { }
+        return time;
+    }
+
     public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setDate(long time) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(time * 1000l);
+        String date = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
         this.date = date;
     }
 

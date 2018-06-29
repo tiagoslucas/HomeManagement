@@ -19,8 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -36,17 +35,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void laundry(View view) {
-        startActivity(new Intent(this,LaundryActivity.class));
-    }
-    public void shopping(View view) {
-        startActivity(new Intent(this,ShoppingActivity.class));
-    }
-    public void floor(View view) {
-        startActivity(new Intent(this,FloorActivity.class));
-    }
-    public void dishes(View view) {
-        startActivity(new Intent(this,DishesActivity.class));
-    }
+    public void laundry(View view) { startActivity(new Intent(this,LaundryActivity.class)); }
+
+    public void shopping(View view) { startActivity(new Intent(this,ShoppingActivity.class)); }
+
+    public void floor(View view) { startActivity(new Intent(this,FloorActivity.class)); }
+
+    public void dishes(View view) { startActivity(new Intent(this,DishesActivity.class)); }
+
     public void add(){ startActivity(new Intent(this,AddActivity.class)); }
 }

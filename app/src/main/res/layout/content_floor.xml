@@ -38,6 +38,7 @@
         android:visibility="visible">
 
         <TextView
+            android:id="@+id/floor_days"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text=""
