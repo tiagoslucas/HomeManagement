@@ -1,15 +1,11 @@
 package tiago.homemanagement;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -40,13 +36,12 @@ public class AddActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home){
-            Spinner spinner = (Spinner) findViewById(R.id.spinner);
             switch(spinner.getSelectedItemPosition()){
                 case 0:
-                    NavUtils.navigateUpTo(this,new Intent(this,ShoppingActivity.class));
+                    startActivity(new Intent(this,ShoppingActivity.class));
                     break;
                 case 1:
-                    NavUtils.navigateUpTo(this,getIntent());
+                    startActivity(new Intent(this,FloorActivity.class));
                     break;
                 default:
                     NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));

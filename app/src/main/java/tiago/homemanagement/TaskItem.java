@@ -47,7 +47,7 @@ public class TaskItem {
         long time = System.currentTimeMillis();
         try {
             Date dateType = dateFormat.parse(this.date);
-            time = dateType.getTime() / 1000l;
+            time = dateType.getTime() / 1000L;
         } catch (ParseException e) { }
         return time;
     }
@@ -58,7 +58,7 @@ public class TaskItem {
 
     public void setDate(long time) {
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(time * 1000l);
+        cal.setTimeInMillis(time * 1000L);
         String date = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
         this.date = date;
     }

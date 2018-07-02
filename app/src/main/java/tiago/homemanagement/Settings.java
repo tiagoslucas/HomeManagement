@@ -21,27 +21,35 @@ public class Settings {
     }
 
     public String getType() {
-        if (type == Types.laundry)
-            return "laundry";
-        else if (type == Types.floor)
-            return "floor";
-        else if (type == Types.dishes)
-            return "dishes";
-        else if (type == Types.shopping)
-            return "shopping";
-        else
-            return null;
+        switch (type) {
+            case laundry:
+                return "laundry";
+            case floor:
+                return "floor";
+            case dishes:
+                return "dishes";
+            case shopping:
+                return "shopping";
+            default:
+                return null;
+        }
     }
 
     public void setType(String type) {
-        if (type.toLowerCase().equals("laundry"))
-            this.type = Types.laundry;
-        else if (type.toLowerCase().equals("floor"))
-            this.type = Types.floor;
-        else if (type.toLowerCase().equals("dishes"))
-            this.type = Types.dishes;
-        else if (type.toLowerCase().equals("shopping"))
-            this.type = Types.shopping;
+        switch (type.toLowerCase()) {
+            case "laundry":
+                this.type = Types.laundry;
+                break;
+            case "floor":
+                this.type = Types.floor;
+                break;
+            case "dishes":
+                this.type = Types.dishes;
+                break;
+            case "shopping":
+                this.type = Types.shopping;
+                break;
+        }
     }
 
     public int getTime() {
