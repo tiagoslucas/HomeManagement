@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class ShoppingActivity extends AppCompatActivity {
 
@@ -19,18 +23,30 @@ public class ShoppingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle(R.string.text2);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {add();
+            public void onClick(View view) {
+                add();
             }
         });
+
+        /*
+        Populate shopping list
+
+        LinearLayout shopList = (LinearLayout) findViewById(R.id.shopList);
+        TextView shopItem = new TextView(getApplicationContext());
+        shopItem.setTextSize(20);
+
+        for(  ){
+            shopItem.setText( take from db );
+            shopList.addView(shopItem, i);
+        } */
     }
 
     private void add() {

@@ -17,6 +17,7 @@ public class AddActivity extends AppCompatActivity {
 
     public static final int SHOPPING_SETTID = 2;
     private static final int FLOOR_SETTID = 4;
+    Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,6 @@ public class AddActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
         if(getIntent().getStringExtra("parent").equals("Floor")) {
             spinner.setSelection(1);
         } else{
@@ -46,7 +46,7 @@ public class AddActivity extends AppCompatActivity {
                     NavUtils.navigateUpTo(this,new Intent(this,ShoppingActivity.class));
                     break;
                 case 1:
-                    NavUtils.navigateUpTo(this,new Intent(this,FloorActivity.class));
+                    NavUtils.navigateUpTo(this,getIntent());
                     break;
                 default:
                     NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));

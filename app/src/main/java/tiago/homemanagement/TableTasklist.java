@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class TableTasklist implements BaseColumns {
-    private static final String TABLE_NAME = "Tasklist";
+    public static final String TABLE_NAME = "Tasklist";
     public static final String NAME_FIELD = "name";
     public static final String DONE_FIELD = "done";
     public static final String DATE_FIELD = "date";
@@ -67,6 +67,9 @@ public class TableTasklist implements BaseColumns {
     public static ContentValues getContentValues(TaskItem taskItem) {
         ContentValues values = new ContentValues();
         values.put(NAME_FIELD, taskItem.getName());
+        values.put(DONE_FIELD, taskItem.isDone());
+        values.put(DATE_FIELD, taskItem.getDate());
+        values.put(SETTING_FIELD, taskItem.getDate());
         return values;
     }
 }
