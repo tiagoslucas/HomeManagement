@@ -14,9 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -37,18 +39,9 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.floorRecyclerView);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         cursorAdapter = new FloorCursorAdapter(this);
         recyclerView.setAdapter(cursorAdapter);
-
-        cursorAdapter.setClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-
-            }
-        });
-
-        getSupportLoaderManager().initLoader(CURSOR_LOADER_ID, null,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,9 +51,10 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {add();
-            }
+            public void onClick(View view) {add(); }
         });
+
+        getSupportLoaderManager().initLoader(CURSOR_LOADER_ID, null,this);
     }
 
     @Override
@@ -98,7 +92,7 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home){
-            NavUtils.navigateUpFromSameTask(this);
+            NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

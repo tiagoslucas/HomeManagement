@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ShoppingActivity"
-    tools:showIn="@layout/activity_shopping">
+    tools:showIn="@layout/activity_shopping"
+    android:id="@+id/shopping_layout">
 
     <ImageView
         android:id="@+id/imageViewShop"
@@ -27,14 +28,13 @@
         android:text="@string/text2"
         android:layout_toEndOf="@id/imageViewShop" />
 
-    <LinearLayout
-        android:id="@+id/shopList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageViewShop"
-        android:layout_margin="20dp"
-        android:orientation="vertical">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/shoppingRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/imageViewShop"
+        android:layout_margin="20dp">
 
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
