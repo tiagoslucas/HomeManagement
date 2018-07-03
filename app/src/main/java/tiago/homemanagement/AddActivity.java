@@ -13,12 +13,12 @@ public class AddActivity extends AppCompatActivity {
 
     public static final int SHOPPING_SETTID = 2;
     private static final int FLOOR_SETTID = 4;
-    Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,13 +35,14 @@ public class AddActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
         if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home){
             switch(spinner.getSelectedItemPosition()){
                 case 0:
-                    startActivity(new Intent(this,ShoppingActivity.class));
+                    NavUtils.navigateUpTo(this,getIntent());
                     break;
                 case 1:
-                    startActivity(new Intent(this,FloorActivity.class));
+                    NavUtils.navigateUpTo(this,getIntent());
                     break;
                 default:
                     NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));

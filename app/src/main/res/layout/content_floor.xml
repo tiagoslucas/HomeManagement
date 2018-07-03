@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".FloorActivity"
-    tools:showIn="@layout/activity_floor">
+    tools:showIn="@layout/activity_floor"
+    android:id="@+id/floor_layout">
 
     <ImageView
         android:id="@+id/imageViewFloor"
@@ -47,50 +48,35 @@
             android:background="@android:drawable/alert_light_frame"/>
     </FrameLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/floorRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frameLayout"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/recycledText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:text="@string/checkmark"
+            android:visibility="invisible" />
+
+    </android.support.v7.widget.RecyclerView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/frameLayout"
         android:layout_below="@id/imageViewFloor"
-        android:textSize="35sp"
-        android:text="@string/days_passed"/>
-
-    <TextView
-        android:id="@+id/room1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_margin="5dp"
-        android:textSize="30sp"
-        android:layout_below="@+id/frameLayout"
-        android:layout_toEndOf="@id/imageViewFloor"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/frameLayout"
-        android:layout_toEndOf="@+id/title"
-        android:layout_marginStart="15dp"
-        android:textSize="40sp"
-        android:text="@string/checkmark"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/room2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_margin="5dp"
-        android:textSize="30sp"
-        android:layout_below="@+id/room1"
-        android:layout_toEndOf="@id/imageViewFloor"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/room1"
-        android:layout_toEndOf="@+id/title"
-        android:layout_marginStart="15dp"
-        android:textSize="40sp"
-        android:text="@string/checkmark"
-        android:visibility="invisible"/>
+        android:layout_toEndOf="@+id/frameLayout"
+        android:text="@string/days_passed"
+        android:textSize="35sp" />
 
 </RelativeLayout>

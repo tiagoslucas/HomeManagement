@@ -13,8 +13,8 @@ public class HomeContentProvider extends ContentProvider {
     private static final String AUTHORITY = "tiago.homemanagement";
 
     private static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
-    private static final Uri SETTINGS_URI = Uri.withAppendedPath(BASE_URI, TableSettings.TABLE_NAME);
-    private static final Uri TASKLIST_URI = Uri.withAppendedPath(BASE_URI, TableTasklist.TABLE_NAME);
+    public static final Uri SETTINGS_URI = Uri.withAppendedPath(BASE_URI, TableSettings.TABLE_NAME);
+    public static final Uri TASKLIST_URI = Uri.withAppendedPath(BASE_URI, TableTasklist.TABLE_NAME);
 
     private static final int SETTINGS = 100;
     private static final int SETTINGS_ID = 101;
