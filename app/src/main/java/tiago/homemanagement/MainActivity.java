@@ -9,6 +9,11 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int LAUNDRY_SETTID =1;
+    public static final int SHOPPING_SETTID = 2;
+    public static final int DISHES_SETTID = 3;
+    public static final int FLOOR_SETTID = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,9 +11,6 @@ import android.widget.Spinner;
 
 public class AddActivity extends AppCompatActivity {
 
-    public static final int SHOPPING_SETTID = 2;
-    private static final int FLOOR_SETTID = 4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +58,11 @@ public class AddActivity extends AppCompatActivity {
             DatabaseOpenHelper openHelper = new DatabaseOpenHelper(getApplicationContext());
             TableTasklist tableTasklist = new TableTasklist(openHelper.getReadableDatabase());
             task.setName(name.getText().toString());
-            task.setSettid(SHOPPING_SETTID);
+            task.setSettid(MainActivity.SHOPPING_SETTID);
             tableTasklist.update(
                     TableTasklist.getContentValues(task),
                     TableTasklist.SETTING_FIELD + "=?",
-                    new String[] {String.valueOf(SHOPPING_SETTID)}
+                    new String[] {String.valueOf(MainActivity.SHOPPING_SETTID)}
             );
         } else if (spinner.getSelectedItemPosition() == 1){
             // Floor
@@ -73,11 +70,11 @@ public class AddActivity extends AppCompatActivity {
             TableTasklist tableTasklist = new TableTasklist(openHelper.getReadableDatabase());
             task.setName(name.getText().toString());
             task.setDate(System.currentTimeMillis());
-            task.setSettid(FLOOR_SETTID);
+            task.setSettid(MainActivity.FLOOR_SETTID);
             tableTasklist.update(
                     TableTasklist.getContentValues(task),
                     TableTasklist.SETTING_FIELD + "=?",
-                    new String[] {String.valueOf(FLOOR_SETTID)}
+                    new String[] {String.valueOf(MainActivity.FLOOR_SETTID)}
             );
         }
     }

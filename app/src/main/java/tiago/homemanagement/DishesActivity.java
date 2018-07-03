@@ -1,6 +1,8 @@
 package tiago.homemanagement;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -9,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.concurrent.TimeUnit;
 
 public class DishesActivity extends AppCompatActivity {
 
@@ -36,17 +40,17 @@ public class DishesActivity extends AppCompatActivity {
         TextView check = (TextView) findViewById(R.id.drying_check);
         if(check.getVisibility() == View.VISIBLE){
             check.setVisibility(View.INVISIBLE);
-            // SET date AS "System.currentTimeMillis()" WHERE name LIKE "dishes"
-
-            /*
-            TextView dishes_days = (TextView) findViewById(R.id.dishes_days);
-            int days = System.currentTimeMillis() - date;
-            dishes_days.setText(days);
-            */
+            TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
+            Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, Integer.toString(MainActivity.DISHES_SETTID)),
+                    new String[]{ TableTasklist.SETTING_FIELD + "=?"}, new Bundle(MainActivity.DISHES_SETTID), null);
+            TaskItem task = TableTasklist.getCurrentTaskItem(cursor);
+            long time = System.currentTimeMillis() - task.getTime();
+            laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
         } else {
             check.setVisibility(View.VISIBLE);
         }
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

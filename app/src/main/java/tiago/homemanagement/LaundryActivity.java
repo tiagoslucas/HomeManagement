@@ -1,6 +1,8 @@
 package tiago.homemanagement;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -9,6 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.String.*;
 
 public class LaundryActivity extends AppCompatActivity {
 
@@ -36,13 +42,12 @@ public class LaundryActivity extends AppCompatActivity {
         TextView check = (TextView) findViewById(R.id.hanging_check);
         if(check.getVisibility() == View.VISIBLE){
             check.setVisibility(View.INVISIBLE);
-            // SET date AS "System.currentTimeMillis()" WHERE name LIKE "dishes"
-
-            /*
             TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
-            int days = System.currentTimeMillis() - date;
-            laundry_days.setText(days);
-            */
+            Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, Integer.toString(MainActivity.LAUNDRY_SETTID)),
+                    new String[]{ TableTasklist.SETTING_FIELD + "=?"}, new Bundle(MainActivity.LAUNDRY_SETTID), null);
+            TaskItem task = TableTasklist.getCurrentTaskItem(cursor);
+            long time = System.currentTimeMillis() - task.getTime();
+            laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
         } else {
             check.setVisibility(View.VISIBLE);
         }

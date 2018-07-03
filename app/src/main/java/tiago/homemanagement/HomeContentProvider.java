@@ -30,11 +30,11 @@ public class HomeContentProvider extends ContentProvider {
     private static UriMatcher matchUri(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-        uriMatcher.addURI(AUTHORITY, "Settings", 100);
-        uriMatcher.addURI(AUTHORITY, "Settings/#", 101);
+        uriMatcher.addURI(AUTHORITY, "Settings", SETTINGS);
+        uriMatcher.addURI(AUTHORITY, "Settings/#", SETTINGS_ID);
 
-        uriMatcher.addURI(AUTHORITY, "Tasklist", 100);
-        uriMatcher.addURI(AUTHORITY, "Tasklist/#", 101);
+        uriMatcher.addURI(AUTHORITY, "Tasklist", TASKLIST);
+        uriMatcher.addURI(AUTHORITY, "Tasklist/#", TASKLIST_ID);
 
         return uriMatcher;
     }
