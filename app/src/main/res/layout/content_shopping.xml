@@ -28,6 +28,15 @@
         android:text="@string/text2"
         android:layout_toEndOf="@id/imageViewShop" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="5dp"
+        android:onClick="clearShoplist" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/shoppingRecyclerView"
         android:layout_width="match_parent"

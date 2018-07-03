@@ -100,4 +100,8 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void clearShoplist(View view) {
+        getContentResolver().delete(HomeContentProvider.TASKLIST_URI, TableTasklist.NAME_FIELD + "=?", new String[] { "shopping" });
+    }
 }
