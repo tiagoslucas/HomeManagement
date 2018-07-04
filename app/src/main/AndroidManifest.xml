@@ -38,6 +38,11 @@
         <activity
             android:name=".PreferencesActivity"
             android:label="@string/action_settings" />
+        <provider
+            android:authorities="tiago.homemanagement"
+            android:name=".HomeContentProvider"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

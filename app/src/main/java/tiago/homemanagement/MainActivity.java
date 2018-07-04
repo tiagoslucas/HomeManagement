@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DatabaseOpenHelper openHelper = new DatabaseOpenHelper(getApplicationContext());
         SQLiteDatabase db = openHelper.getWritableDatabase();
-        TableTasklist tableTasklist = new TableTasklist(db);
-        TableSettings tableSettings = new TableSettings(db);
     }
 
     @Override
