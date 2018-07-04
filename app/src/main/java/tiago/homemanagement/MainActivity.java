@@ -9,7 +9,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int LAUNDRY_SETTID =1;
+    public static final int LAUNDRY_SETTID = 1;
     public static final int SHOPPING_SETTID = 2;
     public static final int DISHES_SETTID = 3;
     public static final int FLOOR_SETTID = 4;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         if (item.getItemId() == R.id.action_settings){
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, PreferencesActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
