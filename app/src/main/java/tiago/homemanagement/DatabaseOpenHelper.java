@@ -34,7 +34,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         TableSettings settings = new TableSettings(db);
         settings.create();
-        settings.insert(TableSettings.getContentValues(new Settings(0,"empty",0)));
+        settings.insert(TableSettings.getContentValues(new Settings(0,"laundry",0)));
         settings.insert(TableSettings.getContentValues(new Settings(1,"laundry",2)));
         settings.insert(TableSettings.getContentValues(new Settings(2,"shopping",0)));
         settings.insert(TableSettings.getContentValues(new Settings(3, "dishes", 1)));

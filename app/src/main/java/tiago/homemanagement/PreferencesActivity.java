@@ -1,14 +1,11 @@
 package tiago.homemanagement;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
 
 public class PreferencesActivity extends PreferenceActivity {
 
@@ -31,18 +28,6 @@ public class PreferencesActivity extends PreferenceActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if (item.getItemId() == R.id.home){
-            NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private static void bindSummaryValue(Preference preference) {
         preference.setOnPreferenceChangeListener(listener);
         listener.onPreferenceChange(preference, PreferenceManager
@@ -58,14 +43,6 @@ public class PreferencesActivity extends PreferenceActivity {
             if (preference instanceof ListPreference) {
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
-                // Set changes in the database
-                if (preference.getKey().equals("laundry_pref")){
-
-                } else if (preference.getKey().equals("dishes_pref")) {
-
-                } else if (preference.getKey().equals("floor_pref")) {
-
-                }
 
                 // Set the summary to reflect the new value
                 preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
@@ -73,4 +50,59 @@ public class PreferencesActivity extends PreferenceActivity {
             return false;
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        updateDatabase();
+        super.onDestroy();
+    }
+
+    private void updateDatabase(){
+        Settings setting;
+        String stringValue;
+
+        stringValue = (String) findPreference("laundry_pref").getSummary();
+        setting = new Settings(1,"laundry",calcTime(stringValue));
+        getContentResolver().update(HomeContentProvider.SETTINGS_URI,
+                TableSettings.getContentValues(setting),
+                "" + TableSettings._ID + "=?",
+                new String[] {String.valueOf(MainActivity.LAUNDRY_SETTID)});
+
+        stringValue = (String) findPreference("dishes_pref").getSummary();
+        setting = new Settings(1,"laundry",calcTime(stringValue));
+        getContentResolver().update(HomeContentProvider.SETTINGS_URI,
+                TableSettings.getContentValues(setting),
+                "" + TableSettings._ID + "=?",
+                new String[] {String.valueOf(MainActivity.DISHES_SETTID)});
+
+        stringValue = (String) findPreference("floor_pref").getSummary();
+        setting = new Settings(1,"laundry",calcTime(stringValue));
+        getContentResolver().update(HomeContentProvider.SETTINGS_URI,
+                TableSettings.getContentValues(setting),
+                "" + TableSettings._ID + "=?",
+                new String[] {String.valueOf(MainActivity.FLOOR_SETTID)});
+    }
+
+    public int calcTime(String stringValue){
+        switch (stringValue) {
+            case "1 day":
+                return 1;
+            case "2 days":
+                return 2;
+            case "3 days":
+                return 3;
+            case "7 days":
+                return 7;
+            case "15 days":
+                return 15;
+            case "30 days":
+                return 30;
+            case "45 days":
+                return 45;
+            case "60 days":
+                return 60;
+            default:
+                return 0;
+        }
+    }
 }
