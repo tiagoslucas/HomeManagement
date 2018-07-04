@@ -1,27 +1,23 @@
 package tiago.homemanagement;
 
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-
-import java.util.Map;
-import java.util.Set;
 
 public class PreferencesActivity extends PreferenceActivity {
 
-
-    SharedPreferences sharedPreferences = getSharedPreferences("settings",MODE_PRIVATE);
+    SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new MainPreferenceFragment()).commit();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     public static class MainPreferenceFragment extends PreferenceFragment {
@@ -33,6 +29,7 @@ public class PreferencesActivity extends PreferenceActivity {
             bindSummaryValue(findPreference("laundry_pref"));
             bindSummaryValue(findPreference("dishes_pref"));
             bindSummaryValue(findPreference("floor_pref"));
+            bindSummaryValue(findPreference("rainy_days"));
         }
     }
 
@@ -66,29 +63,40 @@ public class PreferencesActivity extends PreferenceActivity {
     private void updateDatabase(){
         Settings setting;
         String stringValue;
-        stringValue = (String) sharedPreferences.getString("laundry_pref","");
+        stringValue = (String) prefs.getString("laundry_pref","");
         setting = new Settings(1,"laundry",calcTime(stringValue));
-        getContentResolver().update(HomeContentProvider.SETTINGS_URI,
+        getContentResolver().update(
+                Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(MainActivity.LAUNDRY_SETTID)),
                 TableSettings.getContentValues(setting),
-                TableSettings._ID + "=?",
-                new String[] {String.valueOf(MainActivity.LAUNDRY_SETTID)});
+                null,
+                null);
 
-        stringValue = (String) findPreference("dishes_pref").getSummary();
-        setting = new Settings(1,"laundry",calcTime(stringValue));
-        getContentResolver().update(HomeContentProvider.SETTINGS_URI,
+        stringValue = (String) prefs.getString("dishes_pref","");
+        setting = new Settings(3,"dishes",calcTime(stringValue));
+        getContentResolver().update(
+                Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(MainActivity.DISHES_SETTID)),
                 TableSettings.getContentValues(setting),
-                TableSettings._ID + "=?",
-                new String[] {String.valueOf(MainActivity.DISHES_SETTID)});
+                null,
+                null);
 
-        stringValue = (String) findPreference("floor_pref").getSummary();
-        setting = new Settings(1,"laundry",calcTime(stringValue));
-        getContentResolver().update(HomeContentProvider.SETTINGS_URI,
+        stringValue = (String) prefs.getString("floor_pref","");
+        setting = new Settings(4,"floor",calcTime(stringValue));
+        getContentResolver().update(
+                Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(MainActivity.FLOOR_SETTID)),
                 TableSettings.getContentValues(setting),
-                "" + TableSettings._ID + "=?",
-                new String[] {String.valueOf(MainActivity.FLOOR_SETTID)});
+                null,
+                null);
+
+        stringValue = (String) prefs.getString("rainy_days","");
+        setting = new Settings(0,"laundry",calcTime(stringValue));
+        getContentResolver().update(
+                Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, "0"),
+                TableSettings.getContentValues(setting),
+                null,
+                null);
     }
 
-    public int calcTime(String stringValue){
+    public static int calcTime(String stringValue){
         switch (stringValue) {
             case "1 day":
                 return 1;

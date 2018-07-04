@@ -50,12 +50,11 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         getSupportLoaderManager().initLoader(CURSOR_LOADER_ID, null,this);
 
         Cursor cursor = getContentResolver().query(HomeContentProvider.TASKLIST_URI,
-                new String[]{TableTasklist.SETTING_FIELD},
+                TableTasklist.ALL_COLUMNS,
                 TableTasklist.SETTING_FIELD + "=?",
                 new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
                 TableTasklist.DATE_FIELD + " DESC");
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             TaskItem taskItem = TableTasklist.getCurrentTaskItem(cursor);
             long time = taskItem.getTime();
             time = System.currentTimeMillis() - time;
@@ -74,9 +73,9 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         if (id == CURSOR_LOADER_ID) {
-            return new CursorLoader(this,
+            return new CursorLoader(getApplicationContext(),
                     HomeContentProvider.TASKLIST_URI,
-                    new String[]{TableTasklist.SETTING_FIELD},
+                    TableTasklist.ALL_COLUMNS,
                     TableTasklist.SETTING_FIELD + "=?",
                     new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
                     null);

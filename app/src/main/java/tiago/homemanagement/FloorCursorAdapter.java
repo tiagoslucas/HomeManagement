@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 public class FloorCursorAdapter extends RecyclerView.Adapter<FloorCursorAdapter.ViewHolder> {
 
+    private Context context;
     Cursor cursor = null;
     private View.OnClickListener clickListener = null;
-    private Context context;
     private int lastTaskClicked = -1;
 
     public FloorCursorAdapter(Context context) {

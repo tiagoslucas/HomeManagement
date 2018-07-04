@@ -35,37 +35,27 @@ public class DishesActivity extends AppCompatActivity {
             public void onClick(View view) {check();
             }
         });
+
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
-                new String[]{TableTasklist.SETTING_FIELD},
+                TableTasklist.ALL_COLUMNS,
                 TableTasklist.SETTING_FIELD + "=?",
                 new String[]{String.valueOf(MainActivity.DISHES_SETTID)},
                 null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            task = TableTasklist.getCurrentTaskItem(cursor);
-            setFields();
-        } else {
-            Toast.makeText(this,"No data obtained",Toast.LENGTH_LONG).show();
-        }
+        setFields();
     }
 
     private void setFields(){
         TextView drying_check = (TextView) findViewById(R.id.drying_check);
         TextView laundry_days = (TextView) findViewById(R.id.dishes_days);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {check();
-            }
-        });
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
-                new String[]{TableTasklist.SETTING_FIELD},
+                TableTasklist.ALL_COLUMNS,
                 TableTasklist.SETTING_FIELD + "=?",
                 new String[]{String.valueOf(MainActivity.DISHES_SETTID)},
                 null);
-        if (cursor.getCount() > 0) {
+        if (cursor.moveToFirst()) {
+            task = TableTasklist.getCurrentTaskItem(cursor);
             drying_check.setVisibility(task.isDone() ? View.VISIBLE : View.INVISIBLE);
             long time = System.currentTimeMillis() - task.getTime();
             laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));

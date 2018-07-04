@@ -56,14 +56,22 @@
         android:text="@string/days_passed"/>
 
     <TextView
+        android:id="@+id/rainy_chance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/frameLayout"
+        android:layout_toEndOf="@id/imageViewLaundry" />
+
+    <TextView
         android:id="@+id/rain_probability"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frameLayout"
-        android:layout_toEndOf="@id/imageViewLaundry"
         android:textSize="35sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_alignBaseline="@id/rainy_chance"
+        android:layout_toEndOf="@id/rainy_chance"
         android:text="@string/percent_rain"/>
 
     <ImageView

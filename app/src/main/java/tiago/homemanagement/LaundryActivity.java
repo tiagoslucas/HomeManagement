@@ -1,7 +1,10 @@
 package tiago.homemanagement;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,17 +33,16 @@ public class LaundryActivity extends AppCompatActivity {
             public void onClick(View view) {check();
             }
         });
+        setFields();
 
-        Cursor cursor = getContentResolver().query(
-                HomeContentProvider.TASKLIST_URI,
-                new String[]{TableTasklist.SETTING_FIELD},
-                TableTasklist.SETTING_FIELD + "=?",
-                new String[]{String.valueOf(MainActivity.LAUNDRY_SETTID)},
+        TextView rainyChance = (TextView) findViewById(R.id.rainy_chance);
+        Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, "0"),
+                TableTasklist.ALL_COLUMNS,
+                null,
                 null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            task = TableTasklist.getCurrentTaskItem(cursor);
-            setFields();
+        if (cursor.moveToFirst()) {
+            Settings settings = TableSettings.getCurrentSettings(cursor);
+            rainyChance.setText(settings.getTime());
         } else {
             Toast.makeText(this,"No data obtained",Toast.LENGTH_LONG).show();
         }
@@ -55,7 +57,8 @@ public class LaundryActivity extends AppCompatActivity {
                 TableTasklist.SETTING_FIELD + "=?",
                 new String[]{String.valueOf(MainActivity.LAUNDRY_SETTID)},
                 null);
-        if (cursor.getCount() > 0) {
+        if (cursor.moveToFirst()) {
+            task = TableTasklist.getCurrentTaskItem(cursor);
             drying_check.setVisibility(task.isDone() ? View.VISIBLE : View.INVISIBLE);
             long time = System.currentTimeMillis() - task.getTime();
             laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));

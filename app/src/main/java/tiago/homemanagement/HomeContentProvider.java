@@ -12,15 +12,13 @@ import android.support.annotation.NonNull;
 public class HomeContentProvider extends ContentProvider {
     private static final String AUTHORITY = "tiago.homemanagement";
 
-    private static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
-    public static final Uri SETTINGS_URI = Uri.withAppendedPath(BASE_URI, TableSettings.TABLE_NAME);
-    public static final Uri TASKLIST_URI = Uri.withAppendedPath(BASE_URI, TableTasklist.TABLE_NAME);
+    public static final Uri SETTINGS_URI = Uri.parse("content://" + AUTHORITY + "/" + TableSettings.TABLE_NAME);
+    public static final Uri TASKLIST_URI = Uri.parse("content://" + AUTHORITY + "/" + TableTasklist.TABLE_NAME);
 
     private static final int SETTINGS = 100;
     private static final int SETTINGS_ID = 101;
     private static final int TASKLIST = 200;
     private static final int TASKLIST_ID = 201;
-
 
     private static final String MULTIPLE_ITEMS = "vnd.android.cursor.dir";
     private static final String SINGLE_ITEM = "vnd.android.cursor.item";
@@ -41,7 +39,6 @@ public class HomeContentProvider extends ContentProvider {
     @Override
     public boolean onCreate(){
         openHelper = new DatabaseOpenHelper(getContext());
-        SQLiteDatabase db = openHelper.getWritableDatabase();
         return true;
     }
 
@@ -71,8 +68,8 @@ public class HomeContentProvider extends ContentProvider {
 
     public String getType(@NonNull Uri uri){
         UriMatcher matcher = matchUri();
-
         switch (matcher.match(uri)){
+
             case SETTINGS:
                 return MULTIPLE_ITEMS + "/" + AUTHORITY + "/" + TableSettings.TABLE_NAME;
 
@@ -93,21 +90,20 @@ public class HomeContentProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values){
         SQLiteDatabase db = openHelper.getWritableDatabase();
         UriMatcher matcher = matchUri();
-
         long id = -1;
         switch (matcher.match(uri)){
+
             case SETTINGS:
                 id = new TableSettings(db).insert(values);
-                break;
 
+                break;
             case TASKLIST:
                 id = new TableTasklist(db).insert(values);
-                break;
 
+                break;
             default:
                 throw new UnsupportedOperationException("Invalid URI: " + uri);
         }
-
         if (id > 0) {
             notifyChanges(uri);
             return Uri.withAppendedPath(uri, Long.toString(id));
@@ -125,11 +121,16 @@ public class HomeContentProvider extends ContentProvider {
         UriMatcher matcher = matchUri();
         String id = uri.getLastPathSegment();
         int rows = 0;
-
         switch (matcher.match(uri)){
+
+            case SETTINGS:
+                rows = new TableSettings(db).delete(selection, selectionArgs);
+                break;
+
             case TASKLIST:
                 rows = new TableTasklist(db).delete(selection, selectionArgs);
                 break;
+
             case SETTINGS_ID:
                 rows = new TableSettings(db).delete(TableSettings._ID + "=?", new String[] { id });
                 break;
@@ -141,7 +142,6 @@ public class HomeContentProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Invalid URI: " + uri);
         }
-
         if (rows > 0) notifyChanges(uri);
         return rows;
     }
@@ -152,16 +152,21 @@ public class HomeContentProvider extends ContentProvider {
         String id = uri.getLastPathSegment();
         int rows = 0;
         switch (matcher.match(uri)){
+
+            case SETTINGS:
+                rows = new TableSettings(db).delete(selection, selectionArgs);
+
             case TASKLIST:
                 rows = new TableTasklist(db).delete(selection, selectionArgs);
+
             case SETTINGS_ID:
                 rows = new TableSettings(db).update(values, TableSettings._ID + "=?", new String[] { id });
-                break;
 
+                break;
             case TASKLIST_ID:
                 rows = new TableTasklist(db).update(values, TableTasklist._ID + "=?", new String[] { id });
-                break;
 
+                break;
             default:
                 throw new UnsupportedOperationException("Invalid URI: " + uri);
         }

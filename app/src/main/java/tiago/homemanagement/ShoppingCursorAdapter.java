@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAdapter.ViewHolder>  {
+    private Context context;
     Cursor cursor = null;
     private View.OnClickListener clickListener = null;
-    private Context context;
     private int lastTaskClicked = -1;
 
     public ShoppingCursorAdapter(Context context) {
@@ -55,8 +55,8 @@ public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView texto;
-        TextView check;
+        private TextView texto;
+        private TextView check;
         private int taskID;
 
         public ViewHolder(View itemView) {

@@ -53,9 +53,9 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         if (id == CURSOR_LOADER_ID) {
-            return new CursorLoader(this,
+            return new CursorLoader(getApplicationContext(),
                     HomeContentProvider.TASKLIST_URI,
-                    new String[]{TableTasklist.SETTING_FIELD},
+                    TableTasklist.ALL_COLUMNS,
                     TableTasklist.SETTING_FIELD + "=?",
                     new String[]{String.valueOf(MainActivity.SHOPPING_SETTID)},
                     null);

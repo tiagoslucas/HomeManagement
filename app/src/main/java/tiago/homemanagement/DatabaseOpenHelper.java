@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
+    private static final boolean TESTING = false;
     private static final int VERSION = 1;
     public static final String DATABASE_NAME = "homemanagement.db";
 
@@ -15,13 +16,15 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-            TableTasklist tasklist = new TableTasklist(db);
-            tasklist.create();
-            tasklistDefaults(db);
+        TableTasklist tasklist = new TableTasklist(db);
+        TableSettings settings = new TableSettings(db);
+        tasklist.create();
+        settings.create();
 
-            TableSettings settings = new TableSettings(db);
-            settings.create();
+        if (!TESTING) {
+            tasklistDefaults(db);
             settingsTableConstructor(db);
+        }
     }
 
     @Override
@@ -29,7 +32,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private void settingsTableConstructor(SQLiteDatabase db){
         TableSettings settings = new TableSettings(db);
-        settings.insert(TableSettings.getContentValues(new Settings(0,"laundry",0)));
+        settings.insert(TableSettings.getContentValues(new Settings(0,"laundry",1)));
         settings.insert(TableSettings.getContentValues(new Settings(1,"laundry",2)));
         settings.insert(TableSettings.getContentValues(new Settings(2,"shopping",0)));
         settings.insert(TableSettings.getContentValues(new Settings(3, "dishes", 1)));

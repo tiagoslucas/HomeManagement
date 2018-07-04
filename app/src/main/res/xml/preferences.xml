@@ -40,4 +40,18 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="rain_category"
+        android:title="RAIN PERCENTAGE">
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/pref_days"
+            android:entryValues="@array/pref_days"
+            android:key="rainy_days"
+            android:title="Time to estimate rain percentage"
+            android:summary="@string/dishes_default" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
