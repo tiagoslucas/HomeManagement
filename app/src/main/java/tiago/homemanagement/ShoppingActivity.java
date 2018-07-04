@@ -46,18 +46,6 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
                 add();
             }
         });
-
-        /*
-        Populate shopping list
-
-        LinearLayout shopList = (LinearLayout) findViewById(R.id.shopList);
-        TextView shopItem = new TextView(getApplicationContext());
-        shopItem.setTextSize(20);
-
-        for(  ){
-            shopItem.setText( take from db );
-            shopList.addView(shopItem, i);
-        } */
     }
 
     @Override
@@ -68,7 +56,12 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         if (id == CURSOR_LOADER_ID) {
-            return new CursorLoader(this, HomeContentProvider.TASKLIST_URI, TableTasklist.ALL_COLUMNS, null, null, null);
+            return new CursorLoader(this,
+                    HomeContentProvider.TASKLIST_URI,
+                    new String[]{TableTasklist.SETTING_FIELD},
+                    TableTasklist.SETTING_FIELD + "=?",
+                    new String[]{String.valueOf(MainActivity.SHOPPING_SETTID)},
+                    null);
         }
 
         return null;
@@ -102,6 +95,6 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
     }
 
     public void clearShoplist(View view) {
-        getContentResolver().delete(HomeContentProvider.TASKLIST_URI, TableTasklist.NAME_FIELD + "=?", new String[] { "shopping" });
+        getContentResolver().delete(HomeContentProvider.TASKLIST_URI, TableTasklist.SETTING_FIELD + "=?", new String[] {String.valueOf(MainActivity.SHOPPING_SETTID)});
     }
 }

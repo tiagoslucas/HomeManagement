@@ -59,8 +59,7 @@ public class TaskItem {
     public void setDate(long time) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(time * 1000L);
-        String date = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
-        this.date = date;
+        this.date = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
     }
 
     public int getSettid() {

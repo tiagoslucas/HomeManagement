@@ -40,10 +40,11 @@
             android:id="@+id/laundry_days"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:drawable/alert_light_frame"
             android:text=""
-            android:textAlignment="center"
+            android:autoSizeTextType="uniform"
             android:textSize="25sp"
-            android:background="@android:drawable/alert_light_frame" />
+            android:textAlignment="center" />
     </FrameLayout>
 
     <TextView

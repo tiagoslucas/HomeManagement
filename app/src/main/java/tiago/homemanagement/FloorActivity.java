@@ -2,7 +2,6 @@ package tiago.homemanagement;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -14,16 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class FloorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -55,6 +48,18 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         });
 
         getSupportLoaderManager().initLoader(CURSOR_LOADER_ID, null,this);
+
+        Cursor cursor = getContentResolver().query(HomeContentProvider.TASKLIST_URI,
+                new String[]{TableTasklist.SETTING_FIELD},
+                TableTasklist.SETTING_FIELD + "=?",
+                new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
+                TableTasklist.DATE_FIELD + " DESC");
+        cursor.moveToNext();
+        TaskItem taskItem = TableTasklist.getCurrentTaskItem(cursor);
+        long time = taskItem.getTime();
+        time = System.currentTimeMillis() - time;
+        TextView floor_days = (TextView) findViewById(R.id.floor_days);
+        floor_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
     }
 
     @Override
@@ -65,9 +70,13 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         if (id == CURSOR_LOADER_ID) {
-            return new CursorLoader(this, HomeContentProvider.TASKLIST_URI, TableTasklist.ALL_COLUMNS, null, null, null);
+            return new CursorLoader(this,
+                    HomeContentProvider.TASKLIST_URI,
+                    new String[]{TableTasklist.SETTING_FIELD},
+                    TableTasklist.SETTING_FIELD + "=?",
+                    new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
+                    null);
         }
-
         return null;
     }
 

@@ -12,6 +12,18 @@ public class Settings {
     private Types type;
     private int time;
 
+    public Settings(){
+        this.id = 0;
+        type = Types.laundry;
+        this.time = 0;
+    }
+
+    public Settings(int id, String type, int time){
+        this.id = id;
+        setType(type);
+        this.time = time;
+    }
+
     public int getId() {
         return id;
     }

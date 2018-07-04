@@ -105,7 +105,7 @@ public class HomeContentProvider extends ContentProvider {
                 break;
 
             default:
-                throw new UnsupportedOperationException("Invalide URI: " + uri);
+                throw new UnsupportedOperationException("Invalid URI: " + uri);
         }
 
         if (id > 0) {

@@ -2,7 +2,6 @@ package tiago.homemanagement;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -11,13 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 import java.util.concurrent.TimeUnit;
-
-import static java.lang.String.*;
 
 public class LaundryActivity extends AppCompatActivity {
 
+    TaskItem task;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,18 +33,31 @@ public class LaundryActivity extends AppCompatActivity {
             public void onClick(View view) {check();
             }
         });
+
+        Cursor cursor = getContentResolver().query(
+                HomeContentProvider.TASKLIST_URI,
+                new String[]{TableTasklist.SETTING_FIELD},
+                TableTasklist.SETTING_FIELD + "=?",
+                new String[] {String.valueOf(MainActivity.LAUNDRY_SETTID)},
+                null);
+
+        task = TableTasklist.getCurrentTaskItem(cursor);
+        setFields();
+    }
+
+    private void setFields(){
+        TextView drying_check = (TextView) findViewById(R.id.hanging_check);
+        TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
+        drying_check.setVisibility(task.isDone() ? View.VISIBLE : View.INVISIBLE);
+        long time = System.currentTimeMillis() - task.getTime();
+        laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
     }
 
     private void check() {
         TextView check = (TextView) findViewById(R.id.hanging_check);
         if(check.getVisibility() == View.VISIBLE){
             check.setVisibility(View.INVISIBLE);
-            TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
-            Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, Integer.toString(MainActivity.LAUNDRY_SETTID)),
-                    new String[]{ TableTasklist.SETTING_FIELD + "=?"}, new Bundle(MainActivity.LAUNDRY_SETTID), null);
-            TaskItem task = TableTasklist.getCurrentTaskItem(cursor);
-            long time = System.currentTimeMillis() - task.getTime();
-            laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
+            setFields();
         } else {
             check.setVisibility(View.VISIBLE);
         }
