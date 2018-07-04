@@ -29,21 +29,8 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
         if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home){
-            switch(spinner.getSelectedItemPosition()){
-                case 0:
-                    NavUtils.navigateUpTo(this,getIntent());
-                    break;
-                case 1:
-                    NavUtils.navigateUpTo(this,getIntent());
-                    break;
-                default:
-                    NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));
-            }
+            NavUtils.navigateUpTo(this, getIntent());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -55,27 +42,16 @@ public class AddActivity extends AppCompatActivity {
         TaskItem task = new TaskItem();
         if(spinner.getSelectedItemPosition() == 0){
             // Shopping
-            DatabaseOpenHelper openHelper = new DatabaseOpenHelper(getApplicationContext());
-            TableTasklist tableTasklist = new TableTasklist(openHelper.getReadableDatabase());
             task.setName(name.getText().toString());
             task.setSettid(MainActivity.SHOPPING_SETTID);
-            tableTasklist.update(
-                    TableTasklist.getContentValues(task),
-                    TableTasklist.SETTING_FIELD + "=?",
-                    new String[] {String.valueOf(MainActivity.SHOPPING_SETTID)}
-            );
+            getContentResolver().insert(HomeContentProvider.TASKLIST_URI, TableTasklist.getContentValues(task));
+
         } else if (spinner.getSelectedItemPosition() == 1){
             // Floor
-            DatabaseOpenHelper openHelper = new DatabaseOpenHelper(getApplicationContext());
-            TableTasklist tableTasklist = new TableTasklist(openHelper.getReadableDatabase());
             task.setName(name.getText().toString());
             task.setDate(System.currentTimeMillis());
             task.setSettid(MainActivity.FLOOR_SETTID);
-            tableTasklist.update(
-                    TableTasklist.getContentValues(task),
-                    TableTasklist.SETTING_FIELD + "=?",
-                    new String[] {String.valueOf(MainActivity.FLOOR_SETTID)}
-            );
+            getContentResolver().insert(HomeContentProvider.TASKLIST_URI, TableTasklist.getContentValues(task));
         }
     }
 }

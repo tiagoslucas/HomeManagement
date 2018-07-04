@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.concurrent.TimeUnit;
 
 public class FloorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -30,15 +32,8 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_floor);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        recyclerView = (RecyclerView) findViewById(R.id.floorRecyclerView);
-        cursorAdapter = new FloorCursorAdapter(this);
-        recyclerView.setAdapter(cursorAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -47,6 +42,11 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
             public void onClick(View view) {add(); }
         });
 
+
+        recyclerView = (RecyclerView) findViewById(R.id.floorRecyclerView);
+        cursorAdapter = new FloorCursorAdapter(this);
+        recyclerView.setAdapter(cursorAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getSupportLoaderManager().initLoader(CURSOR_LOADER_ID, null,this);
 
         Cursor cursor = getContentResolver().query(HomeContentProvider.TASKLIST_URI,
@@ -54,12 +54,16 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
                 TableTasklist.SETTING_FIELD + "=?",
                 new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
                 TableTasklist.DATE_FIELD + " DESC");
-        cursor.moveToNext();
-        TaskItem taskItem = TableTasklist.getCurrentTaskItem(cursor);
-        long time = taskItem.getTime();
-        time = System.currentTimeMillis() - time;
-        TextView floor_days = (TextView) findViewById(R.id.floor_days);
-        floor_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            TaskItem taskItem = TableTasklist.getCurrentTaskItem(cursor);
+            long time = taskItem.getTime();
+            time = System.currentTimeMillis() - time;
+            TextView floor_days = (TextView) findViewById(R.id.floor_days);
+            floor_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
+        } else {
+            Toast.makeText(this,"No data obtained",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -94,16 +98,5 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         Intent intent = new Intent(this, AddActivity.class);
         intent.putExtra("parent","Floor");
         startActivity(intent);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home){
-            NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 
 public class ShoppingActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
@@ -36,7 +34,6 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -63,7 +60,6 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
                     new String[]{String.valueOf(MainActivity.SHOPPING_SETTID)},
                     null);
         }
-
         return null;
     }
 
@@ -81,17 +77,6 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
         Intent intent = new Intent(this, AddActivity.class);
         intent.putExtra("parent","Shopping");
         startActivity(intent);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home){
-            NavUtils.navigateUpTo(this,new Intent(this,MainActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void clearShoplist(View view) {

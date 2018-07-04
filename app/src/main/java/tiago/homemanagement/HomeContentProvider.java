@@ -32,7 +32,6 @@ public class HomeContentProvider extends ContentProvider {
 
         uriMatcher.addURI(AUTHORITY, "Settings", SETTINGS);
         uriMatcher.addURI(AUTHORITY, "Settings/#", SETTINGS_ID);
-
         uriMatcher.addURI(AUTHORITY, "Tasklist", TASKLIST);
         uriMatcher.addURI(AUTHORITY, "Tasklist/#", TASKLIST_ID);
 
@@ -42,6 +41,7 @@ public class HomeContentProvider extends ContentProvider {
     @Override
     public boolean onCreate(){
         openHelper = new DatabaseOpenHelper(getContext());
+        SQLiteDatabase db = openHelper.getWritableDatabase();
         return true;
     }
 
@@ -127,6 +127,9 @@ public class HomeContentProvider extends ContentProvider {
         int rows = 0;
 
         switch (matcher.match(uri)){
+            case TASKLIST:
+                rows = new TableTasklist(db).delete(selection, selectionArgs);
+                break;
             case SETTINGS_ID:
                 rows = new TableSettings(db).delete(TableSettings._ID + "=?", new String[] { id });
                 break;
@@ -148,8 +151,9 @@ public class HomeContentProvider extends ContentProvider {
         UriMatcher matcher = matchUri();
         String id = uri.getLastPathSegment();
         int rows = 0;
-
         switch (matcher.match(uri)){
+            case TASKLIST:
+                rows = new TableTasklist(db).delete(selection, selectionArgs);
             case SETTINGS_ID:
                 rows = new TableSettings(db).update(values, TableSettings._ID + "=?", new String[] { id });
                 break;
@@ -161,9 +165,7 @@ public class HomeContentProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Invalid URI: " + uri);
         }
-
         if (rows > 0) notifyChanges(uri);
-
         return rows;
     }
 }

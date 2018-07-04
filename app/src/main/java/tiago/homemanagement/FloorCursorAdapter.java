@@ -2,6 +2,7 @@ package tiago.homemanagement;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -65,7 +66,6 @@ public class FloorCursorAdapter extends RecyclerView.Adapter<FloorCursorAdapter.
             texto = itemView.findViewById(R.id.recycledText);
             check = itemView.findViewById(R.id.check);
         }
-
         public void setTask(TaskItem task){
             texto.setText(task.getName());
             check.setVisibility(
@@ -73,14 +73,6 @@ public class FloorCursorAdapter extends RecyclerView.Adapter<FloorCursorAdapter.
             );
             taskID = task.getId();
         }
-
-        public void changeCheck(){
-            if (check.getVisibility() == View.VISIBLE)
-                check.setVisibility(View.INVISIBLE);
-            else
-                check.setVisibility(View.VISIBLE);
-        }
-
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();

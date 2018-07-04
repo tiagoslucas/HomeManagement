@@ -13,7 +13,6 @@ public class TableTasklist implements BaseColumns {
     public static final String SETTING_FIELD = "settid";
     private SQLiteDatabase db;
     public static final String [] ALL_COLUMNS = new String [] {_ID,NAME_FIELD,DONE_FIELD,DATE_FIELD,SETTING_FIELD};
-
     public TableTasklist(SQLiteDatabase db){
         this.db = db;
     }

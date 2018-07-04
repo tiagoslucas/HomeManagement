@@ -9,14 +9,35 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     public static final String DATABASE_NAME = "homemanagement.db";
 
-    public DatabaseOpenHelper(Context context) {
+    DatabaseOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+            TableTasklist tasklist = new TableTasklist(db);
+            tasklist.create();
+            tasklistDefaults(db);
+
+            TableSettings settings = new TableSettings(db);
+            settings.create();
+            settingsTableConstructor(db);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
+
+    private void settingsTableConstructor(SQLiteDatabase db){
+        TableSettings settings = new TableSettings(db);
+        settings.insert(TableSettings.getContentValues(new Settings(0,"laundry",0)));
+        settings.insert(TableSettings.getContentValues(new Settings(1,"laundry",2)));
+        settings.insert(TableSettings.getContentValues(new Settings(2,"shopping",0)));
+        settings.insert(TableSettings.getContentValues(new Settings(3, "dishes", 1)));
+        settings.insert(TableSettings.getContentValues(new Settings(4, "floor", 30)));
+    }
+
+    private void tasklistDefaults(SQLiteDatabase db){
         TableTasklist tasklist = new TableTasklist(db);
-        tasklist.create();
 
         TaskItem laundryTask = new TaskItem();
         laundryTask.setName("laundry");
@@ -31,16 +52,5 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         dishesTask.setDate(System.currentTimeMillis());
         dishesTask.setSettid(3);
         tasklist.insert(TableTasklist.getContentValues(dishesTask));
-
-        TableSettings settings = new TableSettings(db);
-        settings.create();
-        settings.insert(TableSettings.getContentValues(new Settings(0,"laundry",0)));
-        settings.insert(TableSettings.getContentValues(new Settings(1,"laundry",2)));
-        settings.insert(TableSettings.getContentValues(new Settings(2,"shopping",0)));
-        settings.insert(TableSettings.getContentValues(new Settings(3, "dishes", 1)));
-        settings.insert(TableSettings.getContentValues(new Settings(4, "floor", 30)));
     }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
 }

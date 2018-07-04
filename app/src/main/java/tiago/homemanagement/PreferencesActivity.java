@@ -1,14 +1,22 @@
 package tiago.homemanagement;
 
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+
+import java.util.Map;
+import java.util.Set;
 
 public class PreferencesActivity extends PreferenceActivity {
 
+
+    SharedPreferences sharedPreferences = getSharedPreferences("settings",MODE_PRIVATE);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +51,6 @@ public class PreferencesActivity extends PreferenceActivity {
             if (preference instanceof ListPreference) {
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value
                 preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
             }
             return false;
@@ -60,19 +66,18 @@ public class PreferencesActivity extends PreferenceActivity {
     private void updateDatabase(){
         Settings setting;
         String stringValue;
-
-        stringValue = (String) findPreference("laundry_pref").getSummary();
+        stringValue = (String) sharedPreferences.getString("laundry_pref","");
         setting = new Settings(1,"laundry",calcTime(stringValue));
         getContentResolver().update(HomeContentProvider.SETTINGS_URI,
                 TableSettings.getContentValues(setting),
-                "" + TableSettings._ID + "=?",
+                TableSettings._ID + "=?",
                 new String[] {String.valueOf(MainActivity.LAUNDRY_SETTID)});
 
         stringValue = (String) findPreference("dishes_pref").getSummary();
         setting = new Settings(1,"laundry",calcTime(stringValue));
         getContentResolver().update(HomeContentProvider.SETTINGS_URI,
                 TableSettings.getContentValues(setting),
-                "" + TableSettings._ID + "=?",
+                TableSettings._ID + "=?",
                 new String[] {String.valueOf(MainActivity.DISHES_SETTID)});
 
         stringValue = (String) findPreference("floor_pref").getSummary();

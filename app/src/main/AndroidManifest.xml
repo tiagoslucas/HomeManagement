@@ -22,22 +22,27 @@
         <activity
             android:name=".FloorActivity"
             android:label="@string/title_activity_floor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".LaundryActivity"
             android:label="@string/title_activity_laundry"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ShoppingActivity"
             android:label="@string/title_activity_shopping"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DishesActivity"
             android:label="@string/title_activity_dishes"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".PreferencesActivity"
-            android:label="@string/action_settings" />
+            android:label="@string/action_settings"
+            android:parentActivityName=".MainActivity" />
         <provider
             android:authorities="tiago.homemanagement"
             android:name=".HomeContentProvider"
