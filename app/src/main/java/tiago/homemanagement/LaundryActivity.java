@@ -1,10 +1,11 @@
 package tiago.homemanagement;
 
-import android.content.SharedPreferences;
+import android.annotation.TargetApi;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -36,8 +37,9 @@ public class LaundryActivity extends AppCompatActivity {
         setFields();
 
         TextView rainyChance = (TextView) findViewById(R.id.rainy_chance);
-        Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, "0"),
+        Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI,"0"),
                 TableSettings.ALL_COLUMNS,
+                null,
                 null,
                 null);
         if (cursor.moveToFirst()) {
@@ -53,7 +55,7 @@ public class LaundryActivity extends AppCompatActivity {
         TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
-                TableSettings.ALL_COLUMNS,
+                TableTasklist.ALL_COLUMNS,
                 TableTasklist.SETTING_FIELD + "=?",
                 new String[]{String.valueOf(MainActivity.LAUNDRY_SETTID)},
                 null);
