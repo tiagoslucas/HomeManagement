@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public class HomeContentProvider extends ContentProvider {
     private static final String AUTHORITY = "tiago.homemanagement";
@@ -42,8 +43,9 @@ public class HomeContentProvider extends ContentProvider {
         return true;
     }
 
+    @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder){
         SQLiteDatabase db = openHelper.getReadableDatabase();
         String id = uri.getLastPathSegment();
         UriMatcher matcher = matchUri();
@@ -87,7 +89,7 @@ public class HomeContentProvider extends ContentProvider {
         }
     }
 
-    public Uri insert(@NonNull Uri uri, ContentValues values){
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values){
         SQLiteDatabase db = openHelper.getWritableDatabase();
         UriMatcher matcher = matchUri();
         long id = -1;
@@ -116,7 +118,7 @@ public class HomeContentProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
     }
 
-    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs){
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs){
         SQLiteDatabase db = openHelper.getWritableDatabase();
         UriMatcher matcher = matchUri();
         String id = uri.getLastPathSegment();
@@ -146,7 +148,7 @@ public class HomeContentProvider extends ContentProvider {
         return rows;
     }
 
-    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         UriMatcher matcher = matchUri();
         String id = uri.getLastPathSegment();

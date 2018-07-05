@@ -37,7 +37,7 @@ public class LaundryActivity extends AppCompatActivity {
 
         TextView rainyChance = (TextView) findViewById(R.id.rainy_chance);
         Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, "0"),
-                TableTasklist.ALL_COLUMNS,
+                TableSettings.ALL_COLUMNS,
                 null,
                 null);
         if (cursor.moveToFirst()) {
@@ -53,7 +53,7 @@ public class LaundryActivity extends AppCompatActivity {
         TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
-                new String[]{TableTasklist.SETTING_FIELD},
+                TableSettings.ALL_COLUMNS,
                 TableTasklist.SETTING_FIELD + "=?",
                 new String[]{String.valueOf(MainActivity.LAUNDRY_SETTID)},
                 null);
