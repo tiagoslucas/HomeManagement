@@ -45,6 +45,4 @@ public class MainActivity extends AppCompatActivity {
     public void floor(View view) { startActivity(new Intent(this,FloorActivity.class)); }
 
     public void dishes(View view) { startActivity(new Intent(this,DishesActivity.class)); }
-
-    public void add(){ startActivity(new Intent(this,AddActivity.class)); }
 }

@@ -37,7 +37,7 @@ public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAd
     @NonNull
     @Override
     public ShoppingCursorAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_shopping, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new ShoppingCursorAdapter.ViewHolder(view);
     }
 
@@ -61,8 +61,8 @@ public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAd
 
         public ViewHolder(View itemView) {
             super(itemView);
-            texto = itemView.findViewById(R.id.recycledText);
-            check = itemView.findViewById(R.id.check);
+            texto = (TextView) itemView.findViewById(R.id.recycledText);
+            check = (TextView) itemView.findViewById(R.id.check);
         }
         public void setTask(TaskItem task){
             texto.setText(task.getName());

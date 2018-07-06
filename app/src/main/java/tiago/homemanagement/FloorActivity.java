@@ -1,20 +1,19 @@
 package tiago.homemanagement;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NavUtils;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,13 +54,14 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
                 new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
                 TableTasklist.DATE_FIELD + " DESC");
         if (cursor.moveToFirst()) {
-            TaskItem taskItem = TableTasklist.getCurrentTaskItem(cursor);
-            long time = taskItem.getTime();
-            time = System.currentTimeMillis() - time;
             TextView floor_days = (TextView) findViewById(R.id.floor_days);
-            floor_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
+            TaskItem taskItem = TableTasklist.getCurrentTaskItem(cursor);
+            long time = System.currentTimeMillis() - taskItem.getTime();
+            if (TimeUnit.MILLISECONDS.toDays(time) > 99)
+                floor_days.setTextSize(15);
+            floor_days.setText(Long.toString(TimeUnit.MILLISECONDS.toDays(time)));
         } else {
-            Toast.makeText(this,"No data obtained",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_data,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -73,7 +73,7 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         if (id == CURSOR_LOADER_ID) {
-            return new CursorLoader(getApplicationContext(),
+            return new android.support.v4.content.CursorLoader(this,
                     HomeContentProvider.TASKLIST_URI,
                     TableTasklist.ALL_COLUMNS,
                     TableTasklist.SETTING_FIELD + "=?",
@@ -94,8 +94,22 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     private void add() {
-        Intent intent = new Intent(this, AddActivity.class);
-        intent.putExtra("parent","Floor");
-        startActivity(intent);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.alert_floor);
+        final EditText input = new EditText(this);
+        dialog.setView(input);
+        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                TaskItem task = new TaskItem();
+                task.setName(input.getText().toString());
+                task.setDone(0);
+                task.setDate(System.currentTimeMillis());
+                task.setSettid(MainActivity.FLOOR_SETTID);
+                getContentResolver().insert(HomeContentProvider.TASKLIST_URI, TableTasklist.getContentValues(task));
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

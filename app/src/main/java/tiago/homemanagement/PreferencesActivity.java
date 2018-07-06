@@ -1,5 +1,6 @@
 package tiago.homemanagement;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ public class PreferencesActivity extends PreferenceActivity {
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new MainPreferenceFragment()).commit();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
     }
 
     public static class MainPreferenceFragment extends PreferenceFragment {
@@ -25,11 +27,18 @@ public class PreferencesActivity extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
-
+            Preference button = findPreference("database_manager");
+            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getContext(), AndroidDatabaseManager.class));
+                    return true;
+                }
+            });
             bindSummaryValue(findPreference("laundry_pref"));
             bindSummaryValue(findPreference("dishes_pref"));
             bindSummaryValue(findPreference("floor_pref"));
-            bindSummaryValue(findPreference("rainy_days"));
+            //bindSummaryValue(findPreference("rainy_days"));
         }
     }
 
@@ -61,32 +70,36 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     private void updateDatabase(){
-        Settings setting;
-        String stringValue;
-        stringValue = (String) prefs.getString("laundry_pref","");
-        setting = new Settings(1,"laundry",calcTime(stringValue));
+        Settings setting = new Settings();
+        setting = new Settings(1,"laundry",calcTime(PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getString("laundry_pref", "")));
         getContentResolver().update(
                 Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(MainActivity.LAUNDRY_SETTID)),
                 TableSettings.getContentValues(setting),
                 null,
                 null);
 
-        stringValue = (String) prefs.getString("dishes_pref","");
-        setting = new Settings(3,"dishes",calcTime(stringValue));
+        setting = new Settings(3,"dishes",calcTime(PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getString("dishes_pref", "")));
         getContentResolver().update(
                 Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(MainActivity.DISHES_SETTID)),
                 TableSettings.getContentValues(setting),
                 null,
                 null);
 
-        stringValue = (String) prefs.getString("floor_pref","");
-        setting = new Settings(4,"floor",calcTime(stringValue));
+        setting = new Settings(4,"floor",calcTime(PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getString("floor_pref", "")));
         getContentResolver().update(
                 Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(MainActivity.FLOOR_SETTID)),
                 TableSettings.getContentValues(setting),
                 null,
                 null);
-
+    /*
+    Rain Propability NOT Working, API needs payment
+    See more: https://www.wunderground.com/weather/api/
         stringValue = (String) prefs.getString("rainy_days","");
         setting = new Settings(0,"laundry",calcTime(stringValue));
         getContentResolver().update(
@@ -94,25 +107,26 @@ public class PreferencesActivity extends PreferenceActivity {
                 TableSettings.getContentValues(setting),
                 null,
                 null);
+    */
     }
 
     public static int calcTime(String stringValue){
         switch (stringValue) {
-            case "1 day":
+            case "1":
                 return 1;
-            case "2 days":
+            case "2":
                 return 2;
-            case "3 days":
+            case "3":
                 return 3;
-            case "7 days":
+            case "7":
                 return 7;
-            case "15 days":
+            case "15":
                 return 15;
-            case "30 days":
+            case "30":
                 return 30;
-            case "45 days":
+            case "45":
                 return 45;
-            case "60 days":
+            case "60":
                 return 60;
             default:
                 return 0;

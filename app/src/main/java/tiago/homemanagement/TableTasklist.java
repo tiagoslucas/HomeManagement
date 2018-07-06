@@ -68,7 +68,7 @@ public class TableTasklist implements BaseColumns {
         values.put(NAME_FIELD, taskItem.getName());
         values.put(DONE_FIELD, taskItem.isDone());
         values.put(DATE_FIELD, taskItem.getDate());
-        values.put(SETTING_FIELD, taskItem.getDate());
+        values.put(SETTING_FIELD, taskItem.getSettid());
         return values;
     }
 }

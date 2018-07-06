@@ -54,7 +54,9 @@
         android:layout_below="@id/imageViewLaundry"
         android:textSize="35sp"
         android:text="@string/days_passed"/>
-
+<!--
+    Rain Propability NOT Working, API needs payment
+    See more: https://www.wunderground.com/weather/api/
     <TextView
         android:id="@+id/rainy_chance"
         android:layout_width="wrap_content"
@@ -73,12 +75,13 @@
         android:layout_alignBaseline="@id/rainy_chance"
         android:layout_toEndOf="@id/rainy_chance"
         android:text="@string/percent_rain"/>
+    -->
 
     <ImageView
         android:id="@+id/hanging_laundry"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_below="@id/rain_probability"
+        android:layout_below="@+id/frameLayout"
         android:layout_toEndOf="@id/imageViewLaundry"
         android:adjustViewBounds="false"
         android:src="@drawable/laundry_drying"
@@ -88,11 +91,10 @@
         android:id="@+id/hanging_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rain_probability"
+        android:layout_below="@+id/frameLayout"
         android:layout_toEndOf="@+id/hanging_laundry"
         android:layout_marginStart="15dp"
         android:textSize="45sp"
-        android:text="@string/checkmark"
-        android:visibility="visible"/>
+        android:text="@string/checkmark" />
 
 </RelativeLayout>

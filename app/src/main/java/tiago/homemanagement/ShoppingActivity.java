@@ -1,18 +1,22 @@
 package tiago.homemanagement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 public class ShoppingActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
     private static final int CURSOR_LOADER_ID = 0;
@@ -53,7 +57,7 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         if (id == CURSOR_LOADER_ID) {
-            return new CursorLoader(getApplicationContext(),
+            return new android.support.v4.content.CursorLoader(this,
                     HomeContentProvider.TASKLIST_URI,
                     TableTasklist.ALL_COLUMNS,
                     TableTasklist.SETTING_FIELD + "=?",
@@ -74,12 +78,28 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
     }
 
     private void add() {
-        Intent intent = new Intent(this, AddActivity.class);
-        intent.putExtra("parent","Shopping");
-        startActivity(intent);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Novo item");
+        final EditText input = new EditText(this);
+        dialog.setView(input);
+        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                TaskItem task = new TaskItem();
+                task.setName(input.getText().toString());
+                task.setDone(0);
+                task.setDate(System.currentTimeMillis());
+                task.setSettid(MainActivity.SHOPPING_SETTID);
+                getContentResolver().insert(HomeContentProvider.TASKLIST_URI, TableTasklist.getContentValues(task));
+                dialog.dismiss();
+                cursorAdapter.notifyDataSetChanged();
+            }
+        });
+        dialog.show();
     }
 
     public void clearShoplist(View view) {
         getContentResolver().delete(HomeContentProvider.TASKLIST_URI, TableTasklist.SETTING_FIELD + "=?", new String[] {String.valueOf(MainActivity.SHOPPING_SETTID)});
+        cursorAdapter.notifyDataSetChanged();
     }
 }

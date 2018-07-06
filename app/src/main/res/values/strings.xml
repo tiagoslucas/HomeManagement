@@ -35,5 +35,7 @@
     <string name="laundry_default">2 days</string>
     <string name="dishes_default">1 day</string>
     <string name="floor_default">30 days</string>
+    <string name="alert_floor">Nova Divisão</string>
+    <string name="no_data">No data obtained</string>
 
 </resources>

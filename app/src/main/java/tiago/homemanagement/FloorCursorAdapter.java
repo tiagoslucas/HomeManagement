@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class FloorCursorAdapter extends RecyclerView.Adapter<FloorCursorAdapter.ViewHolder> {
 
     private Context context;
@@ -39,7 +41,7 @@ public class FloorCursorAdapter extends RecyclerView.Adapter<FloorCursorAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_floor, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -57,14 +59,14 @@ public class FloorCursorAdapter extends RecyclerView.Adapter<FloorCursorAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView texto;
-        TextView check;
+        private TextView texto;
+        private TextView check;
         private int taskID;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            texto = itemView.findViewById(R.id.recycledText);
-            check = itemView.findViewById(R.id.check);
+            texto = (TextView) itemView.findViewById(R.id.recycledText);
+            check = (TextView) itemView.findViewById(R.id.check);
         }
         public void setTask(TaskItem task){
             texto.setText(task.getName());

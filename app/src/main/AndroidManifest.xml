@@ -12,13 +12,13 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddActivity"
-            android:label="@string/title_activity_add"/>
+            android:name="tiago.homemanagement.AndroidDatabaseManager"
+            android:label="Database Manager"
+            android:parentActivityName=".PreferencesActivity"/>
         <activity
             android:name=".FloorActivity"
             android:label="@string/title_activity_floor"
@@ -44,10 +44,9 @@
             android:label="@string/action_settings"
             android:parentActivityName=".MainActivity" />
         <provider
-            android:authorities="tiago.homemanagement"
             android:name=".HomeContentProvider"
-            android:exported="false"
-            />
+            android:authorities="tiago.homemanagement"
+            android:exported="false" />
     </application>
 
 </manifest>

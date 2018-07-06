@@ -34,24 +34,27 @@ public class LaundryActivity extends AppCompatActivity {
             public void onClick(View view) {check();
             }
         });
-        setFields();
 
+        /* Rain Propability NOT Working, API needs payment
+           See more: https://www.wunderground.com/weather/api/
         TextView rainyChance = (TextView) findViewById(R.id.rainy_chance);
-        Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI,"0"),
+        Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(MainActivity.LAUNDRY_SETTID)),
                 TableSettings.ALL_COLUMNS,
                 null,
                 null,
                 null);
         if (cursor.moveToFirst()) {
             Settings settings = TableSettings.getCurrentSettings(cursor);
-            rainyChance.setText(settings.getTime());
+            rainyChance.setText(Integer.toString(settings.getTime()));
         } else {
-            Toast.makeText(this,"No data obtained",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"No rain propability",Toast.LENGTH_LONG).show();
         }
+        */
+        setFields();
     }
 
     private void setFields(){
-        TextView drying_check = (TextView) findViewById(R.id.hanging_check);
+        TextView hanging_check = (TextView) findViewById(R.id.hanging_check);
         TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
@@ -61,21 +64,23 @@ public class LaundryActivity extends AppCompatActivity {
                 null);
         if (cursor.moveToFirst()) {
             task = TableTasklist.getCurrentTaskItem(cursor);
-            drying_check.setVisibility(task.isDone() ? View.VISIBLE : View.INVISIBLE);
+            hanging_check.setVisibility(task.isDone() ? View.VISIBLE : View.INVISIBLE);
             long time = System.currentTimeMillis() - task.getTime();
-            laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
+            if (TimeUnit.MILLISECONDS.toDays(time) > 99)
+                laundry_days.setTextSize(15);
+            laundry_days.setText(Long.toString(TimeUnit.MILLISECONDS.toDays(time)));
         } else {
-            Toast.makeText(this,"No data obtained",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.no_data,Toast.LENGTH_LONG).show();
         }
     }
 
     private void check() {
-        TextView check = (TextView) findViewById(R.id.hanging_check);
-        if(check.getVisibility() == View.VISIBLE){
-            check.setVisibility(View.INVISIBLE);
-            setFields();
-        } else {
-            check.setVisibility(View.VISIBLE);
-        }
+        task.setDone(task.isDone() ? 0 : 1);
+        getContentResolver().update(
+                Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, String.valueOf(task.getId())),
+                TableTasklist.getContentValues(task),
+                null,
+                null);
+        setFields();
     }
 }

@@ -2,6 +2,7 @@ package tiago.homemanagement;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -16,17 +17,15 @@ import java.util.concurrent.TimeUnit;
 
 public class DishesActivity extends AppCompatActivity {
 
-    TaskItem task;
+    TaskItem task = new TaskItem();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dishes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -35,19 +34,12 @@ public class DishesActivity extends AppCompatActivity {
             public void onClick(View view) {check();
             }
         });
-
-        Cursor cursor = getContentResolver().query(
-                HomeContentProvider.TASKLIST_URI,
-                TableTasklist.ALL_COLUMNS,
-                TableTasklist.SETTING_FIELD + "=?",
-                new String[]{String.valueOf(MainActivity.DISHES_SETTID)},
-                null);
         setFields();
     }
 
     private void setFields(){
         TextView drying_check = (TextView) findViewById(R.id.drying_check);
-        TextView laundry_days = (TextView) findViewById(R.id.dishes_days);
+        TextView dishes_days = (TextView) findViewById(R.id.dishes_days);
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
                 TableTasklist.ALL_COLUMNS,
@@ -58,19 +50,21 @@ public class DishesActivity extends AppCompatActivity {
             task = TableTasklist.getCurrentTaskItem(cursor);
             drying_check.setVisibility(task.isDone() ? View.VISIBLE : View.INVISIBLE);
             long time = System.currentTimeMillis() - task.getTime();
-            laundry_days.setText((int) TimeUnit.MILLISECONDS.toDays(time));
+            if (TimeUnit.MILLISECONDS.toDays(time) > 99)
+                dishes_days.setTextSize(20);
+            dishes_days.setText(Long.toString(TimeUnit.MILLISECONDS.toDays(time)));
         } else {
-            Toast.makeText(this,"No data obtained",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.no_data,Toast.LENGTH_LONG).show();
         }
     }
 
     private void check() {
-        TextView check = (TextView) findViewById(R.id.drying_check);
-        if (check.getVisibility() == View.VISIBLE) {
-            check.setVisibility(View.INVISIBLE);
-            setFields();
-        } else {
-            check.setVisibility(View.VISIBLE);
-        }
+        task.setDone(task.isDone() ? 0 : 1);
+        getContentResolver().update(
+                Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, String.valueOf(task.getId())),
+                TableTasklist.getContentValues(task),
+                null,
+                null);
+        setFields();
     }
 }
