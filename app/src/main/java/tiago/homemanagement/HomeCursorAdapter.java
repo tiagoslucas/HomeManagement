@@ -2,6 +2,7 @@ package tiago.homemanagement;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAdapter.ViewHolder>  {
+public class HomeCursorAdapter extends RecyclerView.Adapter<HomeCursorAdapter.ViewHolder> {
+
     private Context context;
     Cursor cursor = null;
     private View.OnClickListener clickListener = null;
     private int lastTaskClicked = -1;
 
-    public ShoppingCursorAdapter(Context context) {
+    public HomeCursorAdapter(Context context) {
         this.context = context;
     }
 
@@ -36,16 +38,29 @@ public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAd
 
     @NonNull
     @Override
-    public ShoppingCursorAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
-        return new ShoppingCursorAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ShoppingCursorAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         cursor.moveToPosition(position);
-        TaskItem task = TableTasklist.getCurrentTaskItem(cursor);
+        final TaskItem task = TableTasklist.getCurrentTaskItem(cursor);
         holder.setTask(task);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.check.setVisibility(holder.check.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+                task.setDone(task.isDone() ? 0 : 1);
+                context.getContentResolver().update(Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, String.valueOf(task.getId())),
+                        TableTasklist.getContentValues(task),
+                        null,
+                        null);
+                if (task.getSettid() == MainActivity.FLOOR_SETTID)
+                    task.setDate(System.currentTimeMillis());
+            }
+        });
     }
 
     @Override
@@ -54,10 +69,9 @@ public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAd
         return cursor.getCount();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView texto;
         private TextView check;
-        private int taskID;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -69,18 +83,6 @@ public class ShoppingCursorAdapter extends RecyclerView.Adapter<ShoppingCursorAd
             check.setVisibility(
                     task.isDone() ? View.VISIBLE : View.INVISIBLE
             );
-            taskID = task.getId();
-        }
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-
-            if (position == RecyclerView.NO_POSITION)
-                return;
-            if (clickListener != null) {
-                lastTaskClicked = taskID;
-                clickListener.onClick(v);
-            }
         }
     }
 }

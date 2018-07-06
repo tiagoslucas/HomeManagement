@@ -20,7 +20,7 @@ import android.widget.EditText;
 
 public class ShoppingActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
     private static final int CURSOR_LOADER_ID = 0;
-    private ShoppingCursorAdapter cursorAdapter;
+    private HomeCursorAdapter cursorAdapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -31,7 +31,7 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.shoppingRecyclerView);
-        cursorAdapter = new ShoppingCursorAdapter(this);
+        cursorAdapter = new HomeCursorAdapter(this);
         recyclerView.setAdapter(cursorAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getSupportLoaderManager().initLoader(CURSOR_LOADER_ID, null,this);
@@ -92,7 +92,7 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
                 task.setSettid(MainActivity.SHOPPING_SETTID);
                 getContentResolver().insert(HomeContentProvider.TASKLIST_URI, TableTasklist.getContentValues(task));
                 dialog.dismiss();
-                cursorAdapter.notifyDataSetChanged();
+                refresh();
             }
         });
         dialog.show();
@@ -100,6 +100,14 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
 
     public void clearShoplist(View view) {
         getContentResolver().delete(HomeContentProvider.TASKLIST_URI, TableTasklist.SETTING_FIELD + "=?", new String[] {String.valueOf(MainActivity.SHOPPING_SETTID)});
-        cursorAdapter.notifyDataSetChanged();
+        refresh();
+    }
+
+    public void refresh(){
+        cursorAdapter.refreshData(getContentResolver().query(HomeContentProvider.TASKLIST_URI,
+                TableTasklist.ALL_COLUMNS,
+                TableTasklist.SETTING_FIELD + "=?",
+                new String[]{String.valueOf(MainActivity.SHOPPING_SETTID)},
+                null));
     }
 }

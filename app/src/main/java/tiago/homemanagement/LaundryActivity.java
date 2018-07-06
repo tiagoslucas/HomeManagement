@@ -75,6 +75,8 @@ public class LaundryActivity extends AppCompatActivity {
     }
 
     private void check() {
+        if (task.isDone())
+            task.setDate(System.currentTimeMillis());
         task.setDone(task.isDone() ? 0 : 1);
         getContentResolver().update(
                 Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, String.valueOf(task.getId())),

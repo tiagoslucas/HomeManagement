@@ -16,13 +16,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.concurrent.TimeUnit;
 
 public class FloorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int CURSOR_LOADER_ID = 0;
-    private FloorCursorAdapter cursorAdapter;
+    private HomeCursorAdapter cursorAdapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -43,7 +42,7 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
 
 
         recyclerView = (RecyclerView) findViewById(R.id.floorRecyclerView);
-        cursorAdapter = new FloorCursorAdapter(this);
+        cursorAdapter = new HomeCursorAdapter(this);
         recyclerView.setAdapter(cursorAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getSupportLoaderManager().initLoader(CURSOR_LOADER_ID, null,this);
@@ -108,6 +107,11 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
                 task.setSettid(MainActivity.FLOOR_SETTID);
                 getContentResolver().insert(HomeContentProvider.TASKLIST_URI, TableTasklist.getContentValues(task));
                 dialog.dismiss();
+                cursorAdapter.refreshData(getContentResolver().query(HomeContentProvider.TASKLIST_URI,
+                        TableTasklist.ALL_COLUMNS,
+                        TableTasklist.SETTING_FIELD + "=?",
+                        new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
+                        null));
             }
         });
         dialog.show();
