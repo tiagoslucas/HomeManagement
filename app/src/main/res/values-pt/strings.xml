@@ -38,4 +38,10 @@
     </string-array>
     <string name="alert_floor">New Room</string>
     <string name="no_data">Sem dados</string>
+    <string name="alert_enable">Ativar Notificações</string>
+    <string name="ALERTS">NOTIFICAÇÕES</string>
+    <string name="notification_title">Notificação da Gestão Caseira</string>
+    <string name="dishes_notification">Notificação da Loiça</string>
+    <string name="floor_notification">Notificação do Chão</string>
+    <string name="laundry_notification">Notificação da Roupa</string>
 </resources>

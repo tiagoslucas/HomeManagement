@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.preference.Preference;
 import android.preference.ListPreference;
-import android.preference.SwitchPreference;
 import android.preference.PreferenceFragment;
 
 public class HomePreferencesFragment extends PreferenceFragment {

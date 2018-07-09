@@ -47,6 +47,7 @@
             android:name=".HomeContentProvider"
             android:authorities="tiago.homemanagement"
             android:exported="false" />
+        <receiver android:name=".NotificationReceiver"/>
     </application>
 
 </manifest>

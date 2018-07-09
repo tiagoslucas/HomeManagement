@@ -1,10 +1,14 @@
 package tiago.homemanagement;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -75,8 +79,24 @@ public class LaundryActivity extends AppCompatActivity {
     }
 
     private void check() {
-        if (task.isDone())
+        if (task.isDone()) {
             task.setDate(System.currentTimeMillis());
+            if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("notifications_switch", false)) {
+                Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI,
+                        String.valueOf(MainActivity.DISHES_SETTID)),
+                        new String[]{TableSettings.TIME_FIELD},
+                        null,
+                        null,
+                        null);
+                if (cursor.moveToFirst()) {
+                    long notificationTime = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(cursor.getInt(cursor.getColumnIndex(TableSettings.TIME_FIELD)));
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class).putExtra("activity",MainActivity.LAUNDRY_SETTID);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTime,
+                            PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+                }
+            }
+        }
         task.setDone(task.isDone() ? 0 : 1);
         getContentResolver().update(
                 Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, String.valueOf(task.getId())),

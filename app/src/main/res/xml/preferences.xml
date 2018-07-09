@@ -3,13 +3,12 @@
 
     <PreferenceCategory
         android:key="notification_category"
-        android:title="NOTIFICATIONS">
-
+        android:title="@string/ALERTS">
 
         <SwitchPreference
             android:editable="true"
             android:key="notifications_switch"
-            android:title="Enable Notifications" />
+            android:title="@string/alert_enable" />
 
         <ListPreference
             android:dependency="notifications_switch"

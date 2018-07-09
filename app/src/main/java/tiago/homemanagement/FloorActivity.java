@@ -1,7 +1,11 @@
 package tiago.homemanagement;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -112,6 +116,19 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
                         TableTasklist.SETTING_FIELD + "=?",
                         new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
                         null));
+                Cursor cursor = getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI,
+                        String.valueOf(MainActivity.DISHES_SETTID)),
+                        new String[]{TableSettings.TIME_FIELD},
+                        null,
+                        null,
+                        null);
+                if (cursor.moveToFirst()) {
+                    long notificationTime = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(cursor.getInt(cursor.getColumnIndex(TableSettings.TIME_FIELD)));
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class).putExtra("activity",MainActivity.FLOOR_SETTID);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTime,
+                            PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+                }
             }
         });
         dialog.show();
