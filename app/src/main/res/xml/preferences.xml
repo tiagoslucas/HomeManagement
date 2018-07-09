@@ -18,7 +18,8 @@
             android:entryValues="@array/pref_days"
             android:key="laundry_pref"
             android:title="@string/text1"
-            android:summary="@string/laundry_default" />
+            android:summary="@string/laundry_default"
+            android:persistent="false" />
 
         <ListPreference
             android:dependency="notifications_switch"
@@ -27,7 +28,8 @@
             android:entryValues="@array/pref_days"
             android:key="dishes_pref"
             android:title="@string/text3"
-            android:summary="@string/dishes_default" />
+            android:summary="@string/dishes_default"
+            android:persistent="false" />
 
         <ListPreference
             android:dependency="notifications_switch"
@@ -36,7 +38,8 @@
             android:entryValues="@array/pref_days"
             android:key="floor_pref"
             android:title="@string/text4"
-            android:summary="@string/floor_default" />
+            android:summary="@string/floor_default"
+            android:persistent="false" />
 
     </PreferenceCategory>
 
@@ -44,21 +47,21 @@
         android:title="Database Manager"
         android:key="database_manager"/>
 
-    <!--
-    Rain Propability NOT Working, API needs payment
-    See more: https://www.wunderground.com/weather/api/
-    <PreferenceCategory
-        android:key="rain_category"
-        android:title="RAIN PERCENTAGE">
+        <!--
+        Rain Propability NOT Working, API needs payment
+        See more: https://www.wunderground.com/weather/api/
+        <PreferenceCategory
+            android:key="rain_category"
+            android:title="RAIN PERCENTAGE">
 
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/pref_days"
-            android:entryValues="@array/pref_days"
-            android:key="rainy_days"
-            android:title="Time to estimate rain percentage"
-            android:summary="@string/dishes_default" />
+            <ListPreference
+                android:defaultValue="1"
+                android:entries="@array/pref_days"
+                android:entryValues="@array/pref_days"
+                android:key="rainy_days"
+                android:title="Time to estimate rain percentage"
+                android:summary="@string/dishes_default" />
 
-    </PreferenceCategory>
-    -->
+        </PreferenceCategory>
+        -->
 </PreferenceScreen>
