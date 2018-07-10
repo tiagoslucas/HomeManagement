@@ -17,7 +17,6 @@
         </activity>
         <activity
             android:name="tiago.homemanagement.AndroidDatabaseManager"
-            android:label="Database Manager"
             android:parentActivityName=".PreferencesActivity"/>
         <activity
             android:name=".FloorActivity"

@@ -10,15 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class HomeCursorAdapter extends RecyclerView.Adapter<HomeCursorAdapter.ViewHolder> {
 
     private Context context;
     Cursor cursor = null;
-    private View.OnClickListener clickListener = null;
-    private int lastTaskClicked = -1;
 
     public HomeCursorAdapter(Context context) {
         this.context = context;
@@ -29,14 +26,6 @@ public class HomeCursorAdapter extends RecyclerView.Adapter<HomeCursorAdapter.Vi
             this.cursor = cursor;
             notifyDataSetChanged();
         }
-    }
-
-    public void setClickListener(View.OnClickListener clickListener){
-        this.clickListener = clickListener;
-    }
-
-    public int getLastTaskClicked(){
-        return lastTaskClicked;
     }
 
     @NonNull
@@ -68,7 +57,7 @@ public class HomeCursorAdapter extends RecyclerView.Adapter<HomeCursorAdapter.Vi
             @Override
             public boolean onLongClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                dialog.setItems(new CharSequence[]{(CharSequence) context.getString(R.string.delete_item)}, new DialogInterface.OnClickListener() {
+                dialog.setItems(new CharSequence[]{context.getString(R.string.delete_item)}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         context.getContentResolver().delete(Uri.withAppendedPath(HomeContentProvider.TASKLIST_URI, String.valueOf(task.getId())),null,null);
@@ -76,7 +65,7 @@ public class HomeCursorAdapter extends RecyclerView.Adapter<HomeCursorAdapter.Vi
                         refreshData(context.getContentResolver().query(HomeContentProvider.TASKLIST_URI,
                                 TableTasklist.ALL_COLUMNS,
                                 TableTasklist.SETTING_FIELD + "=?",
-                                new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
+                                new String[]{String.valueOf(task.getSettid())},
                                 null));
                     }
                 });
@@ -98,8 +87,8 @@ public class HomeCursorAdapter extends RecyclerView.Adapter<HomeCursorAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            texto = (TextView) itemView.findViewById(R.id.recycledText);
-            check = (TextView) itemView.findViewById(R.id.check);
+            texto = itemView.findViewById(R.id.recycledText);
+            check = itemView.findViewById(R.id.check);
         }
         public void setTask(TaskItem task){
             texto.setText(task.getName());

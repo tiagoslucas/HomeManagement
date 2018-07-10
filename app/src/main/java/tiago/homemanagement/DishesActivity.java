@@ -25,13 +25,13 @@ public class DishesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dishes);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {check();
@@ -41,8 +41,8 @@ public class DishesActivity extends AppCompatActivity {
     }
 
     private void setFields(){
-        TextView drying_check = (TextView) findViewById(R.id.drying_check);
-        TextView dishes_days = (TextView) findViewById(R.id.dishes_days);
+        TextView drying_check = findViewById(R.id.drying_check);
+        TextView dishes_days = findViewById(R.id.dishes_days);
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
                 TableTasklist.ALL_COLUMNS,
@@ -73,11 +73,13 @@ public class DishesActivity extends AppCompatActivity {
                         null);
                 if (cursor.moveToFirst()) {
                     long notificationTime = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(cursor.getInt(cursor.getColumnIndex(TableSettings.TIME_FIELD)));
+                    // notificationTime = System.currentTimeMillis() + 2000;
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class).putExtra("activity",MainActivity.DISHES_SETTID);
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTime,
                             PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT));
                 }
+                cursor.close();
             }
         }
         task.setDone(task.isDone() ? 0 : 1);

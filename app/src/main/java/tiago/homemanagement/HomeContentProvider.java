@@ -92,7 +92,7 @@ public class HomeContentProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values){
         SQLiteDatabase db = openHelper.getWritableDatabase();
         UriMatcher matcher = matchUri();
-        long id = -1;
+        long id;
         switch (matcher.match(uri)){
 
             case SETTINGS:
@@ -122,7 +122,7 @@ public class HomeContentProvider extends ContentProvider {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         UriMatcher matcher = matchUri();
         String id = uri.getLastPathSegment();
-        int rows = 0;
+        int rows;
         switch (matcher.match(uri)){
 
             case SETTINGS:
@@ -152,14 +152,14 @@ public class HomeContentProvider extends ContentProvider {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         UriMatcher matcher = matchUri();
         String id = uri.getLastPathSegment();
-        int rows = 0;
+        int rows;
         switch (matcher.match(uri)){
 
             case SETTINGS:
-                rows = new TableSettings(db).delete(selection, selectionArgs);
+                rows = new TableSettings(db).update(values, selection, selectionArgs);
 
             case TASKLIST:
-                rows = new TableTasklist(db).delete(selection, selectionArgs);
+                rows = new TableTasklist(db).update(values, selection, selectionArgs);
 
             case SETTINGS_ID:
                 rows = new TableSettings(db).update(values, TableSettings._ID + "=?", new String[] { id });

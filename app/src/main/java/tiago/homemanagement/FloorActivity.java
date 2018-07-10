@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -32,19 +33,19 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_floor);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {add(); }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.floorRecyclerView);
+        recyclerView = findViewById(R.id.floorRecyclerView);
         cursorAdapter = new HomeCursorAdapter(this);
         recyclerView.setAdapter(cursorAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,7 +57,7 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
                 new String[]{String.valueOf(MainActivity.FLOOR_SETTID)},
                 TableTasklist.DATE_FIELD + " DESC");
         if (cursor.moveToFirst()) {
-            TextView floor_days = (TextView) findViewById(R.id.floor_days);
+            TextView floor_days = findViewById(R.id.floor_days);
             TaskItem taskItem = TableTasklist.getCurrentTaskItem(cursor);
             long time = System.currentTimeMillis() - taskItem.getTime();
             if (TimeUnit.MILLISECONDS.toDays(time) > 99)
@@ -73,6 +74,7 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
         getSupportLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
     }
 
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         if (id == CURSOR_LOADER_ID) {
             return new android.support.v4.content.CursorLoader(this,
@@ -128,6 +130,7 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTime,
                             PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT));
                 }
+                cursor.close();
             }
         });
         dialog.show();

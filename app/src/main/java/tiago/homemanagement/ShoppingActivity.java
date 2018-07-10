@@ -1,7 +1,6 @@
 package tiago.homemanagement;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,9 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class ShoppingActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
@@ -27,10 +24,10 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.shoppingRecyclerView);
+        recyclerView = findViewById(R.id.shoppingRecyclerView);
         cursorAdapter = new HomeCursorAdapter(this);
         recyclerView.setAdapter(cursorAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -40,7 +37,7 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

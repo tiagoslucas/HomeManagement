@@ -1,15 +1,12 @@
 package tiago.homemanagement;
 
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,13 +23,13 @@ public class LaundryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laundry);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {check();
@@ -58,8 +55,8 @@ public class LaundryActivity extends AppCompatActivity {
     }
 
     private void setFields(){
-        TextView hanging_check = (TextView) findViewById(R.id.hanging_check);
-        TextView laundry_days = (TextView) findViewById(R.id.laundry_days);
+        TextView hanging_check = findViewById(R.id.hanging_check);
+        TextView laundry_days = findViewById(R.id.laundry_days);
         Cursor cursor = getContentResolver().query(
                 HomeContentProvider.TASKLIST_URI,
                 TableTasklist.ALL_COLUMNS,
@@ -95,6 +92,7 @@ public class LaundryActivity extends AppCompatActivity {
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTime,
                             PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT));
                 }
+                cursor.close();
             }
         }
         task.setDone(task.isDone() ? 0 : 1);
