@@ -44,7 +44,6 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
             public void onClick(View view) {add(); }
         });
 
-
         recyclerView = (RecyclerView) findViewById(R.id.floorRecyclerView);
         cursorAdapter = new HomeCursorAdapter(this);
         recyclerView.setAdapter(cursorAdapter);
@@ -98,7 +97,7 @@ public class FloorActivity extends AppCompatActivity implements LoaderManager.Lo
 
     private void add() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle(R.string.alert_floor);
+        dialog.setTitle(getString(R.string.alert_floor));
         final EditText input = new EditText(this);
         dialog.setView(input);
         dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

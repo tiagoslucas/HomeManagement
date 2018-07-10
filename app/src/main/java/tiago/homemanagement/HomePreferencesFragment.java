@@ -31,22 +31,24 @@ public class HomePreferencesFragment extends PreferenceFragment {
                     int index = listPreference.findIndexOfValue(stringValue);
                     preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
                     int value = preferenceSwitch(stringValue);
-                    int settid;
-                    switch (preference.getTitle().toString().toLowerCase()) {
-                        case "dishes":
+                    int settid = 0;
+                    String type = "";
+                    switch (preference.getKey()) {
+                        case "dishes_pref":
+                            type = "dishes";
                             settid = MainActivity.DISHES_SETTID;
                             break;
-                        case "floor":
+                        case "floor_pref":
+                            type = "floor";
                             settid = MainActivity.FLOOR_SETTID;
                             break;
-                        case "laundry":
+                        case "laundry_pref":
+                            type = "laundry";
                             settid = MainActivity.LAUNDRY_SETTID;
                             break;
-                        default:
-                            settid = 2;
                     }
                     Settings setting;
-                    setting = new Settings(settid, preference.getTitle().toString().toLowerCase(), value);
+                    setting = new Settings(settid, type, value);
                     getContext().getContentResolver().update(
                             Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(settid)),
                             TableSettings.getContentValues(setting),

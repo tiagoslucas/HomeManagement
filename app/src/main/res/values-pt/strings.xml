@@ -36,7 +36,7 @@
         <item>45 dias</item>
         <item>60 dias</item>
     </string-array>
-    <string name="alert_floor">New Room</string>
+    <string name="alert_floor">Nova Divisão</string>
     <string name="no_data">Sem dados</string>
     <string name="alert_enable">Ativar Notificações</string>
     <string name="ALERTS">NOTIFICAÇÕES</string>
@@ -44,4 +44,7 @@
     <string name="dishes_notification">Notificação da Loiça</string>
     <string name="floor_notification">Notificação do Chão</string>
     <string name="laundry_notification">Notificação da Roupa</string>
+    <string name="delete_item">Apagar item?</string>
+    <string name="clear">Limpar</string>
+    <string name="new_item">Novo item</string>
 </resources>

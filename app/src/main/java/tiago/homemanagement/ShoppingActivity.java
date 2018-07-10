@@ -79,7 +79,7 @@ public class ShoppingActivity extends AppCompatActivity implements LoaderManager
 
     private void add() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Novo item");
+        dialog.setTitle(getString(R.string.new_item));
         final EditText input = new EditText(this);
         dialog.setView(input);
         dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
