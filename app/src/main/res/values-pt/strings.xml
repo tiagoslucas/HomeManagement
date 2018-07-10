@@ -44,7 +44,7 @@
     <string name="dishes_notification">Notificação da Loiça</string>
     <string name="floor_notification">Notificação do Chão</string>
     <string name="laundry_notification">Notificação da Roupa</string>
-    <string name="delete_item">Apagar item?</string>
+    <string name="delete_item">Apagar item</string>
     <string name="clear">Limpar</string>
     <string name="new_item">Novo item</string>
 </resources>

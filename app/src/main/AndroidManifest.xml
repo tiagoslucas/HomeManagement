@@ -16,9 +16,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tiago.homemanagement.AndroidDatabaseManager"
-            android:parentActivityName=".PreferencesActivity"/>
-        <activity
             android:name=".FloorActivity"
             android:label="@string/title_activity_floor"
             android:theme="@style/AppTheme.NoActionBar"

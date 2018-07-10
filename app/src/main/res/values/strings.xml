@@ -43,7 +43,7 @@
     <string name="dishes_notification">Dishes Notification</string>
     <string name="floor_notification">Floor Notification</string>
     <string name="laundry_notification">Laundry Notification</string>
-    <string name="delete_item">Delete item?</string>
+    <string name="delete_item">Delete item</string>
     <string name="clear">Clear</string>
     <string name="new_item">New item</string>
 
