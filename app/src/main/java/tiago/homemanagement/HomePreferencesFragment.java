@@ -80,7 +80,7 @@ public class HomePreferencesFragment extends PreferenceFragment {
         Cursor cursor = getContext().getContentResolver().query(Uri.withAppendedPath(HomeContentProvider.SETTINGS_URI, String.valueOf(settid)),
                 new String[]{TableSettings.TIME_FIELD}, null, null, null);
         if (cursor.moveToFirst()) {
-            summary = preferenceSwitch(cursor.getInt(cursor.getColumnIndex(TableSettings.TIME_FIELD)));
+            summary = cursor.getInt(cursor.getColumnIndex(TableSettings.TIME_FIELD)) + " " + getString(R.string.days_passed);
         }
         if (summary != null) {
             preference.setSummary(summary);
@@ -88,28 +88,6 @@ public class HomePreferencesFragment extends PreferenceFragment {
         cursor.close();
     }
 
-    private static String preferenceSwitch(int position) {
-        switch (position) {
-            case 1:
-                return "1 day";
-            case 2:
-                return "2 days";
-            case 3:
-                return "3 days";
-            case 7:
-                return "7 days";
-            case 15:
-                return "15 days";
-            case 30:
-                return "30 days";
-            case 45:
-                return "45 days";
-            case 60:
-                return "60 days";
-            default:
-                return "";
-        }
-    }
     private static int preferenceSwitch(String value) {
         switch (value) {
             case "1 dia":

@@ -12,7 +12,6 @@ import android.util.Log;
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.v("tiagotests","Notification received");
         Intent notificationIntent = new Intent(context, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(notificationIntent);
